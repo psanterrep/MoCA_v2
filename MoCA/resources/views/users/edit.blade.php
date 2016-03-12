@@ -29,6 +29,7 @@
                               <?= Form::label('type', 'User Type'); ?>
                               <?= Form::select("type", $a_types, (isset($user)) ? $user->type->id : null, ['placeholder' => 'Choose one..', 'class'=>'form-control']); ?>
                           </div>
+                          @include('users.more_user_info')
                           <button type="submit" class="btn btn-default">Save</button>
                      <?= Form::close() ?>
                 </div>

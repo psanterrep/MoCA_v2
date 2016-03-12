@@ -23,8 +23,7 @@ class UpdateUsersTable extends Migration
         });
 
         Schema::create('Admins', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idUser');
+            $table->foreign('id')->references('id')->on('Users');
             $table->integer('idRole');
             $table->timestamps();
         });

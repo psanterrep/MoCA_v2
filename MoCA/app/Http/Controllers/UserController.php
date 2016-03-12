@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\User;
+use App\User\Admin;
+use App\User\Doctor;
+use App\User\Patient;
 use App\User\User_Type;
 
 class UserController extends Controller
@@ -67,13 +70,12 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function save(Request $request,$id){
-        if($id == 0)
-            $user = new User();
-        else
-            $user = User::find($id);
+        
+        // Get the instance of the user
+        $user = $this->getUserClassByType($request->input('type'),$id);
 
         $saved = $user->saveFromRequest($request);
-        
+
         $json;
         if($saved){
             $json['state'] = "The user {$user->username} has been saved!";
@@ -85,5 +87,37 @@ class UserController extends Controller
         }
        
         return response()->json($json);  
+    }
+
+    /**
+     * Update the user information.
+     *
+     * @param  Int  $type_id
+     * @return Instance of Doctor, Admin or Patient
+     */
+    private function getUserClassByType($type_id, $id){
+        $user;
+        switch($type_id){
+            case 1 :
+                if(Admin::find($id))
+                    $user = Admin::find($id);
+                else
+                    $user = new Admin();
+            break;
+            case 2 :
+                if(Doctor::find($id))
+                    $user = Doctor::find($id);
+                else
+                    $user = new Doctor();
+            break;
+            case 3 :
+                if(Patient::find($id))
+                    $user = Patient::find($id);
+                else
+                    $user = new Patient();
+            break;
+        }
+        $user->id = $id;
+        return $user;
     }
 }

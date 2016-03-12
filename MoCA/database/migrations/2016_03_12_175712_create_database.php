@@ -48,11 +48,9 @@ class CreateDatabase extends Migration
 
         // Doctors Table
         Schema::create('Doctors', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreign('idUser')->references('id')->on('Users');
+            $table->foreign('id')->references('id')->on('Users');
             $table->string('name');
             $table->string('firstname');
-            $table->string('email')->unique();
             $table->foreign('idPlace')->references('id')->on('Places');
             $table->foreign('idRole')->references('id')->on('Roles');
             $table->timestamps();
@@ -60,8 +58,7 @@ class CreateDatabase extends Migration
 
         // Patient Table
         Schema::create('Patients', function (Blueprint $table) {
-            $table->increments('id');
-            $table->foreign('idUser')->references('id')->on('Users');
+            $table->foreign('id')->references('id')->on('Users');
             $table->timestamps();
         });
 

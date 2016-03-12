@@ -24,8 +24,9 @@ class CreateDatabase extends Migration
         // UserMessage Table
         Schema::create('UserMessages', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idUserReceiver');
-            $table->integer('idUserSender');
+            $table->foreign('idUserSender')->references('id')->on('Users');
+            $table->foreign('idUserReceiver')->references('id')->on('Users');
+            $table->foreign('idMessage')->references('id')->on('Messages');
             $table->timestamps();
         });
 
@@ -37,39 +38,6 @@ class CreateDatabase extends Migration
             $table->timestamps();
         });
 
-        // Doctors Table
-        Schema::create('Doctors', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idUser')->unique();
-            $table->string('name');
-            $table->string('firstname');
-            $table->string('email')->unique();
-            $table->integer('idPlace');
-            $table->integer('idRole');
-            $table->timestamps();
-        });
-
-        // Patient Table
-        Schema::create('Patients', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idUser')->unique();
-            $table->timestamps();
-        });
-
-        // DoctorPatients Table
-        Schema::create('DoctorPatients', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idDoctor');
-            $table->integer('idPatient');
-            $table->date('dateStartFollowed');
-            $table->date('dateEndFollowed');
-            $table->string('firstname');
-            $table->string('email')->unique();
-            $table->integer('idPlace');
-            $table->integer('idRole');
-            $table->timestamps();
-        });
-
         // Places Table
         Schema::create('Places', function (Blueprint $table) {
             $table->increments('id');
@@ -78,12 +46,44 @@ class CreateDatabase extends Migration
             $table->timestamps();
         });
 
+        // Doctors Table
+        Schema::create('Doctors', function (Blueprint $table) {
+            $table->increments('id');
+            $table->foreign('idUser')->references('id')->on('Users');
+            $table->string('name');
+            $table->string('firstname');
+            $table->string('email')->unique();
+            $table->foreign('idPlace')->references('id')->on('Places');
+            $table->foreign('idRole')->references('id')->on('Roles');
+            $table->timestamps();
+        });
+
+        // Patient Table
+        Schema::create('Patients', function (Blueprint $table) {
+            $table->increments('id');
+            $table->foreign('idUser')->references('id')->on('Users');
+            $table->timestamps();
+        });
+
+        // DoctorPatients Table
+        Schema::create('DoctorPatients', function (Blueprint $table) {
+            $table->increments('id');
+            $table->foreign('idDoctor')->references('id')->on('Doctors');
+            $table->foreign('idPatient')->references('id')->on('Patients');
+            $table->date('dateStartFollowed');
+            $table->date('dateEndFollowed');
+            $table->string('firstname');
+            $table->string('email')->unique();
+            $table->timestamps();
+        });
+
+        
         // Places Table
         Schema::create('Transfers', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('idDoctorSender');
-            $table->integer('idDoctorReceiver');
-            $table->integer('idPatient');
+            $table->foreign('idDoctorSender')->references('id')->on('Doctors');
+            $table->foreign('idDoctorReceiver')->references('id')->on('Doctors');
+            $table->foreign('idPatient')->references('id')->on('Patients');
             $table->date('date');
             $table->timestamps();
         });
@@ -104,15 +104,6 @@ class CreateDatabase extends Migration
             $table->string('name');
             $table->timestamps();
         });
-        
-        // ConsultationTests Table
-        Schema::create('ConsultationTests', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('idConsultation');
-            $table->integer('idTest');
-            $table->double('result');
-            $table->timestamps();
-        });
 
         // Tests Table
         Schema::create('Tests', function (Blueprint $table) {
@@ -122,6 +113,28 @@ class CreateDatabase extends Migration
             $table->string('path');
             $table->timestamps();
         });
+
+        // ConsultationTests Table
+        Schema::create('ConsultationTests', function (Blueprint $table) {
+            $table->increments('id');
+            $table->foreign('idConsultation')->references('id')->on('Consultations');
+            $table->foreign('idTest')->references('id')->on('Tests');
+            $table->double('result');
+            $table->timestamps();
+        });
+
+        // Insert User Types
+        $type = new User_Type();
+        $type->name ="admin";
+        $type->save();
+
+        $type = new User_Type();
+        $type->name ="doctor";
+        $type->save();
+
+        $type = new User_Type();
+        $type->name ="patient";
+        $type->save();
     }
 
     /**

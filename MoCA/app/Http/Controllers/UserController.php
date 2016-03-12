@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\User;
+use App\User\User_Type;
 
 class UserController extends Controller
 {
@@ -33,7 +34,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
-        return view('users.edit');
+        return view('users.edit', ['types' => $types]);
     }
 
     /**
@@ -43,7 +44,8 @@ class UserController extends Controller
      */
     public function edit($id){
         $user = User::find($id);
-        return view('users.edit', ['user' => $user]);
+        $types = User_Type::All();
+        return view('users.edit', ['user' => $user, 'types' => $types]);
     }
 
     /**

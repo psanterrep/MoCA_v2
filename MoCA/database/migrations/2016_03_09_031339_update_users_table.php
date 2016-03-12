@@ -12,17 +12,17 @@ class UpdateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function ($table) {
+        Schema::table('Users', function ($table) {
             $table->integer('idUserType');
         });
 
-        Schema::create('user_types', function (Blueprint $table) {
+        Schema::create('UserTypes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
         });
 
-        Schema::create('user_admins', function (Blueprint $table) {
+        Schema::create('Admins', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('idUser');
             $table->integer('idRole');
@@ -37,10 +37,10 @@ class UpdateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function ($table) {
+        Schema::table('Users', function ($table) {
             $table->dropColumn('idUserType');
         });
-        Schema::drop('user_types');
-        Schema::drop('user_admins');
+        Schema::drop('UserTypes');
+        Schema::drop('Admins');
     }
 }

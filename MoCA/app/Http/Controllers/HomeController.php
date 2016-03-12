@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 
+use App\User\User_Type;
+
 class HomeController extends Controller
 {
     /**
@@ -24,6 +26,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $type = new User_Type();
+        $type->name ="admin";
+        $type->save();
         return view('home');
     }
 }

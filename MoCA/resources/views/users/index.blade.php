@@ -15,6 +15,7 @@
                           <th>ID</th>
                           <th>Username</th>
                           <th>Email</th>
+                          <th>Type</th>
                           <th>Edit</th>
                           <th>Delete</th>
                       </tr>  
@@ -23,6 +24,7 @@
                             <td><?php echo $user->id; ?></td>
                             <td><?php echo $user->username; ?></td>
                             <td><?php echo $user->email; ?></td>
+                            <td><?php echo $user->type->name; ?></td>
                             <td><a href="/user/edit/<?= $user->id ?>">edit</a></td>
                             <td><a href="/user/delete/<?= $user->id ?>">delete</a></td>
                         </tr>

@@ -7,20 +7,30 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><?= (isset($user)) ? "Edit user" : "Create user" ?></div>
                 <div class="panel-body">
-                      <form action="/user/save/<?= (isset($user)) ? $user->id : 0 ?>" method="POST">
-                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                      <?php 
+                        $id = (isset($user)) ? $user->id : 0;
+                        $a_types;
+                        foreach ($types as $type) {
+                            $a_types[$type->id] = $type->name;
+                        }
+                      ?>
+                      <?= Form::open(array("url" => "/user/save/".$id,"method" => "POST")) ?>
+                          <?= Form::token(); ?>
                           <div class="form-group">
-                              <label for="username">Username</label>
-                              <input type="text" class="form-control" name="username" value="<?= (isset($user)) ? $user->username : '' ?>"/>
+                              <?= Form::label('username', 'Username'); ?>
+                              <?= Form::text("username", (isset($user)) ? $user->username : '', $attributes = array("class"=>"form-control")); ?>
                           </div>
 
                           <div class="form-group">
-                              <label for="email">Email</label>
-                              <input type="email" class="form-control" name="email" value="<?= (isset($user)) ? $user->email : '' ?>"/>
+                              <?= Form::label('email', 'E-Mail Address'); ?>
+                              <?= Form::email("email", (isset($user)) ? $user->email : '', $attributes = array("class"=>"form-control")); ?>
                           </div>
-
+                          <div class="form-group">
+                              <?= Form::label('type', 'User Type'); ?>
+                              <?= Form::select("type", $a_types, (isset($user)) ? $user->type->id : null, ['placeholder' => 'Choose one..', 'class'=>'form-control']); ?>
+                          </div>
                           <button type="submit" class="btn btn-default">Save</button>
-                     </form>
+                     <?= Form::close() ?>
                 </div>
             </div>
         </div>

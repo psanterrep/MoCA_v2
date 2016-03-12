@@ -19,13 +19,69 @@ class UserController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the all users.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index(){
         $users = User::all();
         return view('users.index', ['users' => $users]);
+    }
+
+    /**
+     * Show the new user page.
+     * @return \Illuminate\Http\Response
+     */
+    public function create(){
+        return view('users.edit');
+    }
+
+    /**
+     * Show the edit user page.
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id){
+        $user = User::find($id);
+        return view('users.edit', ['user' => $user]);
+    }
+
+    /**
+     * Delete this user.
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id){
+        $user = User::find($id);
+        $user->delete();
+        return redirect('user');
+    }
+
+    /**
+     * Save user.
+     *
+     * @param  Request  $request
+     * @param  string  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function save(Request $request,$id){
+        if($id == 0)
+            $user = new User();
+        else
+            $user = User::find($id);
+
+        $saved = $user->saveFromRequest($request);
+        
+        $json;
+        if($saved){
+            $json['state'] = "The user {$user->username} has been saved!";
+            $json['message'] = "success";
+        }    
+        else{
+            $json['state'] = "error";
+            $json['message'] = "The user {$user->username} failed to be saved!";
+        }
+       
+        return response()->json($json);  
     }
 }

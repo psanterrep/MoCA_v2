@@ -9,6 +9,7 @@
 
                 <div class="panel-body">
                     Your Application's Users Page.
+                    <a href="/user/create">New user</a>
                     <table class="table table-striped">
                       <tr>
                           <th>ID</th>
@@ -22,8 +23,8 @@
                             <td><?php echo $user->id; ?></td>
                             <td><?php echo $user->username; ?></td>
                             <td><?php echo $user->email; ?></td>
-                            <td></td>
-                            <td></td>
+                            <td><a href="/user/edit/<?= $user->id ?>">edit</a></td>
+                            <td><a href="/user/delete/<?= $user->id ?>">delete</a></td>
                         </tr>
                     <?php endforeach; ?>
                     </table>
@@ -32,4 +33,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection 

@@ -34,5 +34,17 @@ Route::group(['middleware' => 'web'], function () {
     Route::auth();
 
     Route::get('/home', 'HomeController@index');
-    Route::get('/user', 'UserController@index');
+
+	// User
+	Route::get('/user', 'UserController@index');
+    Route::group(['prefix' => 'user'], function () {
+		// Matches The "/user/new" URL
+		Route::get('/create', 'UserController@create');
+		// Matches The "/user/save/{id}" URL
+		Route::post('/save/{id}', 'UserController@save');
+		// Matches The "/user/edit/{id}" URL
+		Route::get('/edit/{id}', 'UserController@edit');
+		// Matches The "/user/delete/{id}" URL
+		Route::get('/delete/{id}', 'UserController@delete');
+	});
 });

@@ -23,7 +23,8 @@ class UpdateUsersTable extends Migration
         });
 
         Schema::create('user_admins', function (Blueprint $table) {
-            $table->increments('idUser');
+            $table->increments('id');
+            $table->integer('idUser');
             $table->integer('idRole');
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ class Doctor extends Model
     /**
      * The patient that belong to the doctor.
      */
-    public function follow()
+    public function follows()
     {
         return $this->hasMany('App\User\Follow','idDoctor');
     }
@@ -41,6 +41,15 @@ class Doctor extends Model
        return $follow->save();
     }
 
+    public function stopFollowPatient($id){
+        foreach($this->follows as $follow){
+            if($follow->id == $id){
+                $follow->dateEndFollowed = date('c');
+                return  $follow->save();
+            }
+        }
+        return false;       
+    }
     /**
      * Update the user information.
      *

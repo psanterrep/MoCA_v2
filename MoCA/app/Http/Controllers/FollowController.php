@@ -16,18 +16,29 @@ class FollowController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-        $follows = Auth::user()->info()->follow;
+        $follows = Auth::user()->info()->follows;
         return view('follows.index', ['follows' => $follows]);
     }
 
+	/**
+	* Show the page to follow a new patient
+	*
+	* @return \Illuminate\Http\Response
+	*/
     public function add(){
         return view('follows.add');
     }
 
+
+     /**
+     * Stop to follow a patient
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function remove($id){
-        $follow = Follow::find($id);
-        $follow->dateEndFollowed = date('c');
-        $follow->save();
+        $doctor = Auth::user()->info();
+        $doctor->stopFollowPatient($id);
+        // TODO Manage error
         return redirect('follow');
     }
 

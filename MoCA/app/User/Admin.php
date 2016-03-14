@@ -10,6 +10,15 @@ class Admin extends Model
 {
     protected $table = 'Admins';
 
+    /**
+     * The profile of the patient
+     */
+    public function profile()
+    {
+        return $this->belongsTo('App\User','id','id');
+    }
+
+    
 	/**
      * Update the user information.
      *

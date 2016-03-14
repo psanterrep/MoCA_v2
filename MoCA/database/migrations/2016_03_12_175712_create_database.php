@@ -63,14 +63,12 @@ class CreateDatabase extends Migration
         });
 
         // DoctorPatients Table
-        Schema::create('DoctorPatients', function (Blueprint $table) {
+        Schema::create('Follow', function (Blueprint $table) {
             $table->increments('id');
             $table->foreign('idDoctor')->references('id')->on('Doctors');
             $table->foreign('idPatient')->references('id')->on('Patients');
             $table->date('dateStartFollowed');
-            $table->date('dateEndFollowed');
-            $table->string('firstname');
-            $table->string('email')->unique();
+            $table->date('dateEndFollowed')->nullable();
             $table->timestamps();
         });
 
@@ -89,7 +87,7 @@ class CreateDatabase extends Migration
         Schema::create('Consultations', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
-            $table->text('comment');
+            $table->text('comment')->nullable();
             $table->integer('idType');
             $table->date('date');
             $table->timestamps();
@@ -146,7 +144,7 @@ class CreateDatabase extends Migration
         Schema::drop('Messages');
         Schema::drop('Doctors');
         Schema::drop('Patients');
-        Schema::drop('DoctorPatients');
+        Schema::drop('Follow');
         Schema::drop('Places');
         Schema::drop('Transfers');
         Schema::drop('Consultations');

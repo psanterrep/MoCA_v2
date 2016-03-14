@@ -47,4 +47,14 @@ Route::group(['middleware' => 'web'], function () {
 		// Matches The "/user/delete/{id}" URL
 		Route::get('/delete/{id}', 'UserController@delete');
 	});
+
+    Route::get('/follow', 'FollowController@index');
+	Route::group(['prefix' => 'follow'], function () {
+		// Matches The "/follow/add/{id}" URL
+		Route::get('/add/', 'FollowController@add');
+		// Matches The "/follow/save/{id}" URL
+		Route::post('/save/', 'FollowController@save');
+		// Matches The "/follow/remove/{id}" URL
+		Route::get('/remove/{id}', 'FollowController@remove');
+	});
 });

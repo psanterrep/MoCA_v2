@@ -10,6 +10,23 @@ class Patient extends Model
 {
     protected $table = 'Patients';
 
+
+    /**
+     * The patient that belong to the doctor.
+     */
+    public function followedby()
+    {
+        return $this->belongsTo('App\User\Follow');
+    }
+
+    /**
+     * The profile of the patient
+     */
+    public function profile()
+    {
+        return $this->belongsTo('App\User','id','id');
+    }
+
     /**
      * Update the user information.
      *
@@ -17,20 +34,36 @@ class Patient extends Model
      * @return Boolean
      */
     public function saveFromRequest(Request $request){
-        if(!isset($this->id))
-        	$user = new User();
+        $user;
+        if(!isset($this->profile) || is_null(User::find($this->id)))
+            $user = new User();
         else
-        	$user = User::find($this->id);
+            $user = User::find($this->id);
 
 
         $user->saveFromRequest($request);
         $this->id = $user->id;
-        $this->name = $request->input('type');
-        $this->firstname = $request->input('firstname');
        
         /*TODO
         $this->idPlace = $request->input('place');
         $this->idRole = $request->input('role');*/
         return $this->save();
     }
+
+    /**
+     * Get a patient associated with the username
+     *
+     * @param  String  $username
+     * @return Boolean or Patient
+     */
+     public static function findByUsername($username){
+        $patients = self::all();
+        foreach($patients as $patient){
+            if($patient->profile->username == $username)
+                return $patient;
+        }
+
+        return false;
+     }
+
 }

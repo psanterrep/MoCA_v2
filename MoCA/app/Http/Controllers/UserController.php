@@ -37,6 +37,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(){
+        $types = User_Type::All();
         return view('users.edit', ['types' => $types]);
     }
 

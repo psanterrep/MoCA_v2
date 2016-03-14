@@ -49,6 +49,9 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
                     <li><a href="{{ url('/user') }}">Users</a></li>
+                    @if (Auth::user()->isDoctor())
+                        <li><a href="{{ url('/follow') }}">My Patients</a></li>
+                    @endif
                 </ul>
 
                 <!-- Right Side Of Navbar -->

@@ -15,7 +15,7 @@
                               <?= Form::label('username', 'Username of the patient'); ?>
                               <?= Form::text("username", '', $attributes = array("class"=>"form-control")); ?>
                           </div>
-                      <button type="submit" class="btn btn-default">Save</button>
+                      <button type="submit" class="btn btn-primary">Save</button>
                       <?= Form::close(); ?>
                 </div>
             </div>

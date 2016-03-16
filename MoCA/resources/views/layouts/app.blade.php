@@ -49,8 +49,11 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
                     <li><a href="{{ url('/user') }}">Users</a></li>
-                    @if (Auth::user()->isDoctor())
+                    @if (!Auth::guest() && Auth::user()->isDoctor())
                         <li><a href="{{ url('/follow') }}">My Patients</a></li>
+                    @endif
+                    @if (!Auth::guest() && (Auth::user()->isDoctor() || Auth::user()->isPatient()))
+                        <li><a href="{{ url('/consultation') }}">My Consultation</a></li>
                     @endif
                 </ul>
 

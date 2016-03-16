@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row">
@@ -15,7 +14,6 @@
                         }
                       ?>
                       <?= Form::open(array("url" => "/user/save/".$id,"method" => "POST")) ?>
-                          <?= Form::token(); ?>
                           <div class="form-group">
                               <?= Form::label('username', 'Username'); ?>
                               <?= Form::text("username", (isset($user)) ? $user->username : '', $attributes = array("class"=>"form-control")); ?>
@@ -27,12 +25,14 @@
                           </div>
                           <div class="form-group">
                               <?= Form::label('type', 'User Type'); ?>
-                              <?= Form::select("type", $a_types, (isset($user)) ? $user->type->id : null, ['placeholder' => 'Choose one..', 'class'=>'form-control']); ?>
+                              <?= Form::select("type", $a_types, (isset($user)) ? $user->type->id : null, ['placeholder' => 'Choose one..', 'class'=>'form-control','data-type'=>'user-'.$id]); ?>
                           </div>
-                          <?php if (isset($user)): ?>
-                            @include('users.more_user_info')
-                          <?php endif ?>
-                          <button type="submit" class="btn btn-default">Save</button>
+                          <div id="user-<?= $id ?>">
+                            <?php if (isset($user)): ?>
+                              @include('users.more_user_info')
+                            <?php endif ?>
+                          </div>
+                          <button type="submit" class="btn btn-primary">Save</button>
                      <?= Form::close() ?>
                 </div>
             </div>

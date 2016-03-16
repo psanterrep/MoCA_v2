@@ -5,18 +5,18 @@
 <?php elseif ($user->type->id == 2): ?>
 	<div class="form-group">
 		<?= Form::label('firstname', 'Firstname'); ?>
-		<?= Form::text("firstname", $user->info()->firstname, $attributes = array("class"=>"form-control")); ?>
+		<?= Form::text("firstname", isset($user->info()->firstname) ? $user->info()->firstname : "", $attributes = array("class"=>"form-control")); ?>
 	</div>
 	<div class="form-group">
 		<?= Form::label('name', 'Name'); ?>
-		<?= Form::text("name", $user->info()->name, $attributes = array("class"=>"form-control")); ?>
+		<?= Form::text("name", isset($user->info()->name) ? $user->info()->name : "" , $attributes = array("class"=>"form-control")); ?>
 	</div>
 	<div class="form-group">
 		<?= Form::label('place', 'Select your workplace'); ?>
-		<?= Form::text("place", $user->info()->idPlace, $attributes = array("class"=>"form-control")); ?>
+		<?= Form::text("place", isset($user->info()->idPlace) ? $user->info()->idPlace : "" , $attributes = array("class"=>"form-control")); ?>
 	</div>
 	<div class="form-group">
 		<?= Form::label('role', 'Role'); ?>
-		<?= Form::text("role", $user->info()->firstname, $attributes = array("class"=>"form-control")); ?>
+		<?= Form::text("role", isset($user->info()->firstname) ? $user->info()->firstname : "" , $attributes = array("class"=>"form-control")); ?>
 	</div>
 <?php endif ?>

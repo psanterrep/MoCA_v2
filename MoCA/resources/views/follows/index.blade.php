@@ -17,6 +17,7 @@
                           <th>Starting to follow at</th>
                           <th>Ended to follow at</th>
                           <th>Email</th>
+                          <th>Consultation</th>
                           <th>Remove</th>
                       </tr>  
                     <?php foreach($follows as $follow): ?>
@@ -26,7 +27,8 @@
                             <td><?php echo $follow->dateStartFollowed; ?></td>
                             <td><?php echo $follow->dateEndFollowed; ?></td>
                             <td><?php echo $follow->patient->profile->email; ?></td>
-                            <td><a href="/follow/remove/<?= $follow->id ?>">Remove</a></td>
+                            <td><a href="/consultation/add/<?= $follow->patient->id ?>">Add</a></td>
+                            <td><a href="/follow/remove/<?= $follow->id ?>">Stop follow</a></td>
                         </tr>
                     <?php endforeach; ?>
                     </table>

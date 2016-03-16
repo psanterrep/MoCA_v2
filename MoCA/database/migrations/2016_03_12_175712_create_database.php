@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use App\User\User_Type;
 
 class CreateDatabase extends Migration
 {
@@ -13,6 +14,20 @@ class CreateDatabase extends Migration
     public function up()
     {
 
+        // UserTypes
+        Schema::create('UserTypes', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->timestamps();
+        });
+
+        // Users
+        Schema::table('Users', function ($table) {
+            $table->integer('idUserType')->unsigned();
+            $table->foreign('idUserType')->references('id')->on('UserTypes');
+        });
+
+
         // Roles Table
         Schema::create('Roles', function (Blueprint $table) {
             $table->increments('id');
@@ -21,9 +36,20 @@ class CreateDatabase extends Migration
             $table->timestamps();
         });
 
+        Schema::create('Admins', function (Blueprint $table) {
+            $table->integer('id')->unsigned();
+            $table->integer('idRole');
+            $table->foreign('id')->references('id')->on('Users');
+            $table->foreign('idRole')->references('id')->on('Roles');
+            $table->timestamps();
+        });
+
         // UserMessage Table
         Schema::create('UserMessages', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('idUserSender')->unsigned();
+            $table->integer('idUserReceiver')->unsigned();
+            $table->integer('idMessage')->unsigned();
             $table->foreign('idUserSender')->references('id')->on('Users');
             $table->foreign('idUserReceiver')->references('id')->on('Users');
             $table->foreign('idMessage')->references('id')->on('Messages');
@@ -48,9 +74,12 @@ class CreateDatabase extends Migration
 
         // Doctors Table
         Schema::create('Doctors', function (Blueprint $table) {
-            $table->foreign('id')->references('id')->on('Users');
+            $table->integer('id')->unsigned();
             $table->string('name');
             $table->string('firstname');
+            $table->integer('idPlace')->unsigned();
+            $table->integer('idRole')->unsigned();
+            $table->foreign('id')->references('id')->on('Users');
             $table->foreign('idPlace')->references('id')->on('Places');
             $table->foreign('idRole')->references('id')->on('Roles');
             $table->timestamps();
@@ -58,6 +87,7 @@ class CreateDatabase extends Migration
 
         // Patient Table
         Schema::create('Patients', function (Blueprint $table) {
+            $table->integer('id')->unsigned();
             $table->foreign('id')->references('id')->on('Users');
             $table->timestamps();
         });
@@ -65,6 +95,8 @@ class CreateDatabase extends Migration
         // DoctorPatients Table
         Schema::create('Follow', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('idDoctor')->unsigned();
+            $table->integer('idPatient')->unsigned();
             $table->foreign('idDoctor')->references('id')->on('Doctors');
             $table->foreign('idPatient')->references('id')->on('Patients');
             $table->date('dateStartFollowed');
@@ -76,6 +108,9 @@ class CreateDatabase extends Migration
         // Places Table
         Schema::create('Transfers', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('idDoctorSender')->unsigned();
+            $table->integer('idDoctorReceiver')->unsigned();
+            $table->integer('idPatient')->unsigned();
             $table->foreign('idDoctorSender')->references('id')->on('Doctors');
             $table->foreign('idDoctorReceiver')->references('id')->on('Doctors');
             $table->foreign('idPatient')->references('id')->on('Patients');
@@ -87,9 +122,8 @@ class CreateDatabase extends Migration
         Schema::create('Consultations', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
-            $table->text('comment')->nullable();
             $table->integer('idType');
-            $table->date('date');
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
 
@@ -97,6 +131,22 @@ class CreateDatabase extends Migration
         Schema::create('Types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->timestamps();
+        });
+
+        // PatientsConsultations Table
+        Schema::create('PatientsConsultations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('idPatient');
+            $table->integer('idConsultation');
+            $table->timestamps();
+        });
+
+        // DoctorsConsultations Table
+        Schema::create('DoctorsConsultations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('idDoctor');
+            $table->integer('idConsultation');
             $table->timestamps();
         });
 
@@ -112,9 +162,11 @@ class CreateDatabase extends Migration
         // ConsultationTests Table
         Schema::create('ConsultationTests', function (Blueprint $table) {
             $table->increments('id');
+            $table->double('result');
+            $table->integer('idConsultation')->unsigned();
+            $table->integer('idTest')->unsigned();
             $table->foreign('idConsultation')->references('id')->on('Consultations');
             $table->foreign('idTest')->references('id')->on('Tests');
-            $table->double('result');
             $table->timestamps();
         });
 
@@ -139,7 +191,12 @@ class CreateDatabase extends Migration
      */
     public function down()
     {
+        Schema::table('Users', function ($table) {
+            $table->dropColumn('idUserType');
+        });
         Schema::drop('Roles');
+        Schema::drop('UserTypes');
+        Schema::drop('Admins');
         Schema::drop('UserMessages');
         Schema::drop('Messages');
         Schema::drop('Doctors');
@@ -148,6 +205,8 @@ class CreateDatabase extends Migration
         Schema::drop('Places');
         Schema::drop('Transfers');
         Schema::drop('Consultations');
+        Schema::drop('PatientsConsultations');
+        Schema::drop('DoctorsConsultations');
         Schema::drop('Types');
         Schema::drop('ConsultationTests');
         Schema::drop('Tests');

@@ -7,9 +7,15 @@ use Auth;
 use App\Http\Requests;
 use App\User\Follow;
 use App\User\Patient;
+use Exception;
 
 class FollowController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Show the all patient for this user.
      *
@@ -49,21 +55,25 @@ class FollowController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function save(Request $request){
-    	$doctor = Auth::user()->info();
+    	try{
+            $doctor = Auth::user()->info();
     	$patient = Patient::findByUsername($request->input('username'));
 
         $json;
-        if(!$patient){
-            $json['state'] = "success";
-            $json['message'] = "The patient doesnt exist";
+        if(!$patient)
+            throw new Exception("The patient doesnt exist");
+
+        if(!$doctor->followPatient($patient))
+            throw new Exception("Failed to be saved!");
+
+
+        $json['state'] = "success";
+        $json['message'] = "The user doctor follow a new patient!";
+       
         }
-        else if($doctor->followPatient($patient)){
-            $json['state'] = "The user doctor follow a new patient!";
-            $json['message'] = "success";
-        }    
-        else{
+        catch(Exception $e){
             $json['state'] = "error";
-            $json['message'] = "Failed to be saved!";
+            $json['message'] = $e->getMessage();
         }
     	
 		return response()->json($json); 

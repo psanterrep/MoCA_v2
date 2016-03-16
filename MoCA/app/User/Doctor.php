@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\User;
 use App\User\Follow;
+use Exception;
 
 class Doctor extends Model
 {
@@ -28,17 +29,29 @@ class Doctor extends Model
     }
 
     /**
+     *  Consultation of a doctor
+     */
+    public function consultations()
+    {
+        return $this->belongsToMany('App\Consultation','DoctorsConsultations','idDoctor','idConsultation')->withTimestamps()->get();
+    }
+
+    /**
      * Follow a new patient
      *
      * @param  Patient  $patient
      * @return Boolean
      */
     public function followPatient(Patient $patient){
-       $follow = new Follow();
-       $follow->idDoctor = $this->id;
-       $follow->idPatient = $patient->id;
-       $follow->dateStartFollowed = date('c');
-       return $follow->save();
+        if($this->isFollowingPatient($patient->id)){
+            $follow = new Follow();
+            $follow->idDoctor = $this->id;
+            $follow->idPatient = $patient->id;
+            $follow->dateStartFollowed = date('c');
+            return $follow->save();
+        }
+        else
+            throw new Exception("Already following this patient!");
     }
 
     public function stopFollowPatient($id){
@@ -50,6 +63,7 @@ class Doctor extends Model
         }
         return false;       
     }
+
     /**
      * Update the user information.
      *
@@ -73,5 +87,17 @@ class Doctor extends Model
         return $this->save();
     }
 
-
+    /**
+     * Check if the doctor already follow the patient
+     *
+     * @param  int  $id
+     * @return Boolean
+     */
+    public function isFollowingPatient($idPatient){
+        foreach($this->follows() as $follow){
+            if($patient->id == $idPatient)
+                return true;
+        }
+        return false;
+    }
 }

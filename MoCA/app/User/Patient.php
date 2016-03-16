@@ -28,6 +28,14 @@ class Patient extends Model
     }
 
     /**
+     *  Consultation of a patient
+     */
+    public function consultations()
+    {
+        return $this->belongsToMany('App\Consultation','PatientConsultations','idPatient','idConsultation')->withTimestamps()->get();
+    }
+
+    /**
      * Update the user information.
      *
      * @param  Request  $request

@@ -33,7 +33,7 @@ class Doctor extends Model
      */
     public function consultations()
     {
-        return $this->belongsToMany('App\Consultation','DoctorsConsultations','idDoctor','idConsultation')->withTimestamps()->get();
+        return $this->belongsToMany('App\Consultation','DoctorsConsultations','idDoctor','idConsultation')->withTimestamps();
     }
 
     /**

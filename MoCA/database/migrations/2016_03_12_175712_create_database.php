@@ -59,7 +59,7 @@ class CreateDatabase extends Migration
         // Messages Table
         Schema::create('Messages', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('date');
+            $table->datetime('date');
             $table->text('content');
             $table->timestamps();
         });
@@ -99,8 +99,8 @@ class CreateDatabase extends Migration
             $table->integer('idPatient')->unsigned();
             $table->foreign('idDoctor')->references('id')->on('Doctors');
             $table->foreign('idPatient')->references('id')->on('Patients');
-            $table->date('dateStartFollowed');
-            $table->date('dateEndFollowed')->nullable();
+            $table->datetime('dateStartFollowed');
+            $table->datetime('dateEndFollowed')->nullable();
             $table->timestamps();
         });
 
@@ -114,21 +114,21 @@ class CreateDatabase extends Migration
             $table->foreign('idDoctorSender')->references('id')->on('Doctors');
             $table->foreign('idDoctorReceiver')->references('id')->on('Doctors');
             $table->foreign('idPatient')->references('id')->on('Patients');
-            $table->date('date');
+            $table->datetime('date');
             $table->timestamps();
         });
 
         // Consultations Table
         Schema::create('Consultations', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('date');
+            $table->datetime('date');
             $table->integer('idType');
             $table->text('comment')->nullable();
             $table->timestamps();
         });
 
         // Types Table
-        Schema::create('Types', function (Blueprint $table) {
+        Schema::create('ConsultationTypes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->timestamps();
@@ -154,7 +154,7 @@ class CreateDatabase extends Migration
         Schema::create('Tests', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('version');
+            $table->integer('version');
             $table->string('path');
             $table->timestamps();
         });
@@ -182,6 +182,16 @@ class CreateDatabase extends Migration
         $type = new User_Type();
         $type->name ="patient";
         $type->save();
+
+        $type = new Consultation_Type();
+        $type->name ="supervised";
+        $type->save();
+
+        $type = new Consultation_Type();
+        $type->name ="unsupervised";
+        $type->save();
+
+
     }
 
     /**
@@ -207,7 +217,7 @@ class CreateDatabase extends Migration
         Schema::drop('Consultations');
         Schema::drop('PatientsConsultations');
         Schema::drop('DoctorsConsultations');
-        Schema::drop('Types');
+        Schema::drop('ConsultationTypes');
         Schema::drop('ConsultationTests');
         Schema::drop('Tests');
 

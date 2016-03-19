@@ -10,7 +10,6 @@
                 <div class="panel-body">
                     Your add's follow Page.
                      <?= Form::open(array("url" => "/follow/save/","method" => "POST")); ?>
-                          <?= Form::token(); ?>
                           <div class="form-group">
                               <?= Form::label('username', 'Username of the patient'); ?>
                               <?= Form::text("username", '', $attributes = array("class"=>"form-control")); ?>

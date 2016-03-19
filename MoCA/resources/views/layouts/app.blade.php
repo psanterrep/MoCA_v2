@@ -52,6 +52,9 @@
                     @if (!Auth::guest() && Auth::user()->isDoctor())
                         <li><a href="{{ url('/follow') }}">My Patients</a></li>
                     @endif
+                    @if (!Auth::guest() && Auth::user()->isAdmin())
+                        <li><a href="{{ url('/test') }}">Tests</a></li>
+                    @endif
                     @if (!Auth::guest() && (Auth::user()->isDoctor() || Auth::user()->isPatient()))
                         <li><a href="{{ url('/consultation') }}">My Consultation</a></li>
                     @endif

@@ -121,4 +121,36 @@ class UserController extends Controller
         $user->id = $id;
         return $user;
     }
+
+    /**
+     * Update the user information.
+     *
+     * @param  Int  $type_id
+     * @return Instance of Doctor, Admin or Patient
+     */
+    private function getInfoView($type_id, $id){
+        $user;
+        switch($type_id){
+            case 1 :
+                if(Admin::find($id))
+                    $user = Admin::find($id);
+                else
+                    $user = new Admin();
+            break;
+            case 2 :
+                if(Doctor::find($id))
+                    $user = Doctor::find($id);
+                else
+                    $user = new Doctor();
+            break;
+            case 3 :
+                if(Patient::find($id))
+                    $user = Patient::find($id);
+                else
+                    $user = new Patient();
+            break;
+        }
+        $user->id = $id;
+        return $user;
+    }
 }

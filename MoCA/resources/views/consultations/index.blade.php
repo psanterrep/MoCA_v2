@@ -11,21 +11,21 @@
                     Your Application's Consultation Page.
                     <table class="table table-striped">
                       <tr>
-                          <th>ID</th>
                           <th>Patient Name</th>
+                          <th>Type</th>
                           <th>Date</th>
                           <th>Comment</th>
                           <th>Edit</th>
-                          <th>Delete</th>
+                          <th>Cancel</th>
                       </tr>  
                     <?php foreach($consultations as $consultation): ?>
                         <tr>
-                            <td><?php echo $consultation->id; ?></td>
                             <td><?php echo isset($consultation->patients()->get()->first()->profile->username) ? $consultation->patients()->get()->first()->profile->username : ""; ?></td>
+                            <td><?php echo isset($consultation->type) ? $consultation->type->name: ""; ?></td>
                             <td><?php echo $consultation->date; ?></td>
-                            <td><?php echo $consultation->comment; ?></td>
-                            <td><a href="/consultation/edit/<?= $consultation->id ?>">edit</a></td>
-                            <td><a href="/consultation/delete/<?= $consultation->id ?>">delete</a></td>
+                            <td><?php echo isset($consultation->comment) ? $consultation->comment : ""; ?></td>
+                            <td><a href="/consultation/edit/<?= $consultation->id ?>">Edit</a></td>
+                            <td><a href="/consultation/cancel/<?= $consultation->id ?>">Cancel</a></td>
                         </tr>
                     <?php endforeach; ?>
                     </table>

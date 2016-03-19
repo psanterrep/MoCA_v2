@@ -62,7 +62,7 @@ class User extends Authenticatable
      * @return Boolean
      */
     public function isAdmin(){
-        if($this->type->id == User_Type::Admin)
+        if($this->type->id == User_Type::ADMIN)
             return true;
 
         return false;

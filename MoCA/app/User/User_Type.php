@@ -13,7 +13,7 @@ class User_Type extends Model
     const PATIENT = 3;
 
     /**
-     * Get the post that owns the comment.
+     * Get the user
      */
     public function user()
     {

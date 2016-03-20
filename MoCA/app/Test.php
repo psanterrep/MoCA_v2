@@ -8,6 +8,14 @@ class Test extends Model
 {
     protected $table = 'Tests';
 
+    /**
+     *  Tests used in those consultations
+     */
+    public function consultations()
+    {
+        return $this->belongsToMany('App\Consultation','ConsultationsTests','idTest','idConsultation')->withPivot('result')->withTimestamps();
+    }
+
     /*
     *	Base path to test
     */

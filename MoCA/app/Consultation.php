@@ -29,6 +29,14 @@ class Consultation extends Model
     }
 
     /**
+     * The test that belong to the consultation.
+     */
+    public function tests()
+    {
+        return $this->belongsToMany('App\Test','ConsultationsTests','idConsultation','idTest')->withPivot('result')->withTimestamps();
+    }
+
+    /**
     * Get the type record associated with the consultation.
     */
     public function type()
@@ -58,6 +66,10 @@ class Consultation extends Model
         $this->comment = $request->input('comment');
         $this->idType = $request->input('type');
         $this->save();
+        foreach ($request->input('tests') as $idTest) {
+            $test = Test::findOrFail($idTest);
+            $this->tests()->attach($test);
+        }
         $this->patients()->attach($patient);
         $this->doctors()->attach($doctor);
         return true;
@@ -73,6 +85,27 @@ class Consultation extends Model
         $this->date = $request->input('date');
         $this->comment = $request->input('comment');
         $this->idType = $request->input('type');
+
+        $activeTests = $request->input('tests');
+        $currentTests = [];
+
+        
+        //  Check if a test have been removed
+        foreach($this->tests()->get() as $test){
+            if(is_null($activeTests) || !in_array($test->id, $activeTests))
+                $this->tests()->detach($test);
+            else
+                $currentTests[] = $test->id;
+        }
+        
+        //  Check if test is not already attach
+        if(!is_null($activeTests)){
+            foreach ($activeTests as $idTest) {
+                $test = Test::findOrFail($idTest);
+                if(!in_array($test->id, $currentTests))
+                    $this->tests()->attach($test);
+            }
+        }
         $this->save();
         return true;
     }

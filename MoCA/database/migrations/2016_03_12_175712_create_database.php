@@ -160,7 +160,7 @@ class CreateDatabase extends Migration
         });
 
         // ConsultationTests Table
-        Schema::create('ConsultationTests', function (Blueprint $table) {
+        Schema::create('ConsultationsTests', function (Blueprint $table) {
             $table->increments('id');
             $table->double('result');
             $table->integer('idConsultation')->unsigned();
@@ -218,7 +218,7 @@ class CreateDatabase extends Migration
         Schema::drop('PatientsConsultations');
         Schema::drop('DoctorsConsultations');
         Schema::drop('ConsultationTypes');
-        Schema::drop('ConsultationTests');
+        Schema::drop('ConsultationsTests');
         Schema::drop('Tests');
 
     }

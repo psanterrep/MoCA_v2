@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Http\Requests;
 use App\Consultation;
+use App\Test;
 use App\Consultation\Consultation_Type;
 use App\User\Patient;
 
@@ -34,7 +35,8 @@ class ConsultationController extends Controller
      */
     public function edit($id){
     	$consultation = Consultation::findOrFail($id);
-    	return view('consultations.edit', ['consultation' => $consultation]);
+    	$tests = Test::all();
+    	return view('consultations.edit', ['consultation' => $consultation, 'tests'=> $tests]);
     }
 
     /**		
@@ -44,7 +46,10 @@ class ConsultationController extends Controller
 	* @return \Illuminate\Http\Response
 	*/
 	public function add($idPatient){
-		return view('consultations.add', ['id' => $idPatient,'types'=>Consultation_Type::all()]);
+		$types = Consultation_Type::all();
+		$tests = Test::all();
+
+		return view('consultations.add', ['id' => $idPatient,'types'=>$types,'tests'=> $tests]);
 	}
 
 	/**		

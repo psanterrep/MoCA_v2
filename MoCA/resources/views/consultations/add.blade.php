@@ -26,6 +26,14 @@
 						<?= Form::label('type', 'Consultation Type'); ?>
 						<?= Form::select("type", $a_types, null, ['placeholder' => 'Choose one..', 'class'=>'form-control']); ?>
 					</div>
+					<div class="form-group">
+						<?= Form::label('test', 'Tests'); ?>
+						<select multiple="multiple" name="tests[]" id="tests" class="form-control">
+						@foreach($tests as $test)
+							<option value="{{$test->id}}" ><?= $test->name." - Version_".$test->version ?></option>
+						@endforeach
+						</select>
+					</div>
 					<button type="submit" class="btn btn-primary">Save</button>
 					<?= Form::close() ?>
 				</div>

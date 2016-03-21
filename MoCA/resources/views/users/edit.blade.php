@@ -6,6 +6,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading"><?= (isset($user)) ? "Edit user" : "Create user" ?></div>
                 <div class="panel-body">
+                    @include('errors.messages')
                       <?php 
                         $id = (isset($user)) ? $user->id : 0;
                         $a_types;

@@ -9,8 +9,7 @@ use App\Test;
 
 class TestController extends Controller
 {
-    public function __construct()
-	{
+    public function __construct(){
 		$this->middleware('auth');
 	}
 
@@ -49,38 +48,44 @@ class TestController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function save(Request $request,$id){
-		$test;
-		if($id == 0)
-			$test = new Test();
-		else{
-			$test = Test::findOrFail($id);
-			
-			//	If new file, we make a new version
-			if($request->hasFile('file')){
-				$old_test = $test;
+		try{
+			// Validate input before doing anything
+			$validator =$this->validate($request, [
+				'name' => 'required|max:255',
+			]);
+
+			$test;
+			if($id == 0)
 				$test = new Test();
-				$test->name = $old_test->name;
-				$test->version = $old_test->version + 1;
+			else{
+				$test = Test::findOrFail($id);
+				
+				//	If new file, we make a new version
+				if($request->hasFile('file')){
+					$old_test = $test;
+					$test = new Test();
+					$test->name = $old_test->name;
+					$test->version = $old_test->version + 1;
+				}
 			}
-		}
-			
-		$test->name = $request->input('name');
+				
+			$test->name = $request->input('name');
 
-		if($request->hasFile('file')){
-			//	Get temp file
-			$file = $request->file('file');
-			$test->uploadFile($file);
-		}
+			if($request->hasFile('file')){
+				//	Get temp file
+				$file = $request->file('file');
+				$test->uploadFile($file);
+			}
 
-		if($test->save()){
-			$json['state'] = "success";
-			$json['message'] = "success!";
-		}    
-		else{
-			$json['state'] = "error";
-			$json['message'] = "Failed to be saved!";
+			if(!$test->save())
+				throw new Exception("Cannot save this test");
+
+			\Session::flash('alert-success','This test have been saved!');
+			return redirect('test');
+
+		}catch(Exception $e){
+			\Session::flash('alert-danger',$e->getMessage());
+			return redirect()->back();
 		}
-		return response()->json($json);
-		//return Redirect::to('upload')->withInput()->withErrors($validator);
     }
 }

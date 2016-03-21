@@ -6,9 +6,8 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading"><?= isset($test) ? "Edit" : "Add"; ?> a test</div>
-
                 <div class="panel-body">
-                    Your add's follow Page.
+                    @include('errors.messages')
                     <?php $id = isset($test) ? $test->id : 0; ?>
                      <?= Form::open(array("url" => "/test/save/{$id}","method" => "POST", 'files' => true)); ?>
                           <div class="form-group">

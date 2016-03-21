@@ -8,6 +8,7 @@ use App\User\User_Type;
 use App\User\Admin;
 use App\User\Doctor;
 use App\User\Patient;
+use Hash;
 
 class User extends Authenticatable
 {
@@ -45,15 +46,18 @@ class User extends Authenticatable
      */
     public function info()
     {
-        if($this->type->id == User_Type::ADMIN){
-            return Admin::find($this->id);
+        if(isset($this->idUserType)){
+            if($this->type->id == User_Type::ADMIN){
+                return Admin::find($this->id);
+            }
+            if($this->type->id == User_Type::DOCTOR){
+                return Doctor::find($this->id);
+            }
+            if($this->type->id == User_Type::PATIENT){
+                return Patient::find($this->id);
+            }
         }
-        if($this->type->id == User_Type::DOCTOR){
-            return Doctor::find($this->id);
-        }
-        if($this->type->id == User_Type::PATIENT){
-            return Patient::find($this->id);
-        }
+        return false;
     }
 
     /**
@@ -91,6 +95,7 @@ class User extends Authenticatable
 
         return false;
     }
+
     /**
      * Update the user information.
      *
@@ -99,8 +104,12 @@ class User extends Authenticatable
      */
     public function saveFromRequest(Request $request){
 
+        if(is_null($this->id))
+            $this->password = Hash::make($request->input('username'));
         $this->username = $request->input('username');
         $this->email = $request->input('email');
+        if($this->info())
+            $this->info()->delete();
         $this->idUserType = $request->input('type');
 
         return $this->save();

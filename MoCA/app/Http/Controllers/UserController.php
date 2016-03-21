@@ -17,8 +17,7 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth');
     }
 
@@ -58,9 +57,19 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function delete($id){
-        $user = User::find($id);
-        $user->delete();
-        return redirect('user');
+        try{
+            $user = User::find($id);
+            if(!$user->delete())
+                throw new Exception("Cannot remove this user!");
+            
+            \Session::flash('alert-success','This user have been deleted!');
+            return redirect('user');
+
+        }catch(Exception $e){
+            \Session::flash('alert-danger',$e->getMessage());
+            return redirect()->back();
+        
+        }
     }
 
     /**
@@ -72,22 +81,38 @@ class UserController extends Controller
      */
     public function save(Request $request,$id){
         
-        // Get the instance of the user
-        $user = $this->getUserClassByType($request->input('type'),$id);
+        try{
+            $rules = array(
+                        'username' => 'required|max:255',
+                        'type' => 'required|integer|min:1'
+                    );
+            if($id == 0)
+                $rules['email'] ='required|email|max:255|unique:Users,email';
+            else 
+                $rules['email'] ='required|email|max:255';
+            
+            // Validate input before doing anything
+            $validator =$this->validate($request, $rules);
+                
+            // Get the instance of the user
+            $user = $this->getUserClassByType($request->input('type'),$id);
 
-        $saved = $user->saveFromRequest($request);
+            $saved = $user->saveFromRequest($request);
 
-        $json;
-        if($saved){
-            $json['state'] = "The user {$user->username} has been saved!";
-            $json['message'] = "success";
-        }    
-        else{
-            $json['state'] = "error";
-            $json['message'] = "The user {$user->username} failed to be saved!";
-        }
-       
-        return response()->json($json);  
+            if(!$saved){
+                throw new Exception("Cannot save user!");
+            }
+
+            if($id == 0)    
+                \Session::flash('alert-success','This user have been created! The password is the same as the username');
+            else
+                \Session::flash('alert-success','This user have been saved!');
+            return redirect('user');
+       }
+       catch(Exception $e){
+            \Session::flash('alert-danger',$e->getMessage());
+            return redirect()->back();
+       }
     }
 
     /**

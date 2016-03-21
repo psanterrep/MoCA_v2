@@ -12,8 +12,7 @@ use App\User\Patient;
 
 class ConsultationController extends Controller
 {
-	public function __construct()
-	{
+	public function __construct(){
 		$this->middleware('auth');
 	}
 
@@ -48,7 +47,6 @@ class ConsultationController extends Controller
 	public function add($idPatient){
 		$types = Consultation_Type::all();
 		$tests = Test::all();
-
 		return view('consultations.add', ['id' => $idPatient,'types'=>$types,'tests'=> $tests]);
 	}
 
@@ -60,18 +58,26 @@ class ConsultationController extends Controller
 	* @return \Illuminate\Http\Response
 	*/
 	public function save(Request $request, $idPatient){
-		$consultation = new Consultation();
-		$patient = Patient::findOrFail($idPatient);
-		$json;
-		if($consultation->createFromRequest($request, $patient, Auth::user()->info())){
-			$json['state'] = "success";
-			$json['message'] = "success!";
-		}    
-		else{
-			$json['state'] = "error";
-			$json['message'] = "Failed to be saved!";
+		try{
+			// Validate input before doing anything
+			$validator =$this->validate($request, [
+				'date' => 'required|max:255',
+				'type' => 'required|integer|min:1|exists:ConsultationTypes,id',
+			]);
+
+			$consultation = new Consultation();
+			$patient = Patient::findOrFail($idPatient);
+
+			if(!$consultation->createFromRequest($request, $patient, Auth::user()->info()))
+				throw new Exception("Cannot save this consultation");
+
+			\Session::flash('alert-success','This consultation have been updated!');
+			return redirect('consultation');
+
+		}catch(Exception $e){
+			\Session::flash('alert-danger',$e->getMessage());
+			return redirect()->back();
 		}
-		return response()->json($json);
 	}
 
 	/**		
@@ -82,37 +88,45 @@ class ConsultationController extends Controller
 	* @return \Illuminate\Http\Response
 	*/
 	public function update(Request $request, $idConsultation){
-		$consultation = Consultation::findOrFail($idConsultation);
-		$json;
-		if($consultation->updateFromRequest($request)){
-			$json['state'] = "success";
-			$json['message'] = "success!";
-		}    
-		else{
-			$json['state'] = "error";
-			$json['message'] = "Failed to be updated!";
+		try{
+			// Validate input before doing anything
+			$validator =$this->validate($request, [
+				'date' => 'required|max:255',
+				'type' => 'required|integer|min:1|exists:ConsultationTypes,id',
+			]);
+
+			$consultation = Consultation::findOrFail($idConsultation);
+			if(!$consultation->updateFromRequest($request))
+				throw new Exception("Cannot update this consultation");
+
+			\Session::flash('alert-success','This consultation have been updated!');
+			return redirect('consultation');
+
+		}catch(Exception $e){
+			\Session::flash('alert-danger',$e->getMessage());
+			return redirect()->back();
 		}
-		return response()->json($json);
 	}
 
 	/**		
 	* Cancel consultation 
 	*
-    * @param  Request  $request
     * @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
 	public function cancel($idConsultation){
-		$consultation = Consultation::findOrFail($idConsultation);
-		$json;
-		if($consultation->cancel()){
-			$json['state'] = "success";
-			$json['message'] = "success!";
-		}    
-		else{
-			$json['state'] = "error";
-			$json['message'] = "Failed to be updated!";
+		try{
+			$consultation = Consultation::findOrFail($idConsultation);
+			
+			if(!$consultation->cancel())
+				throw new Exception("Cannot stop this consultation");
+
+			\Session::flash('alert-success','This consultation have been canceled!');
+			return redirect('consultation');
+
+		}catch(Exception $e){
+			\Session::flash('alert-danger',$e->getMessage());
+			return redirect()->back();
 		}
-		 return redirect('consultation');
 	}
 }

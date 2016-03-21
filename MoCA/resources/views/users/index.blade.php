@@ -6,9 +6,8 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">Users</div>
-
                 <div class="panel-body">
-                    Your Application's Users Page.
+                    @include('errors.messages')
                     <a href="/user/create">New user</a>
                     <table class="table table-striped">
                       <tr>

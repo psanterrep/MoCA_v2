@@ -16,14 +16,11 @@
                             $a_tests[] = $test->id;
                         }
                       ?>
+                      @include('errors.messages')
                       <?= Form::open(array("url" => "/consultation/update/".$consultation->id,"method" => "POST")) ?>
                         <div class="form-group">
                           <?= Form::label('date', 'Date'); ?>
                           <?= Form::date("date", $consultation->date, $attributes = array("class"=>"form-control")); ?>
-                        </div>
-                        <div class="form-group">
-                          <?= Form::label('comment', 'Comment'); ?>
-                          <?= Form::date("comment", isset($consultation->comment) ? $consultation->comment : "", $attributes = array("class"=>"form-control")); ?>
                         </div>
                         <div class="form-group">
                           <?= Form::label('type', 'Consultation Type'); ?>
@@ -36,6 +33,10 @@
                             <option value="{{$test->id}}" <?= (in_array($test->id,$a_tests)) ? 'selected="selected"': ''; ?>><?= $test->name." - Version_".$test->version ?></option>
                           @endforeach
                           </select>
+                        </div>
+                        <div class="form-group">
+                          <?= Form::label('comment', 'Comment'); ?>
+                          <?= Form::text("comment", isset($consultation->comment) ? $consultation->comment : "", $attributes = array("class"=>"form-control")); ?>
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                       <?= Form::close() ?>

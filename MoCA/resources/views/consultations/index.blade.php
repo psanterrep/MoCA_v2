@@ -5,10 +5,9 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Users</div>
-
+                <div class="panel-heading">Consultations</div>
                 <div class="panel-body">
-                    Your Application's Consultation Page.
+                    @include('errors.messages')
                     <table class="table table-striped">
                       <tr>
                           <th>Patient Name</th>

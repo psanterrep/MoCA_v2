@@ -43,7 +43,8 @@ class Patient extends Model
      */
     public function saveFromRequest(Request $request){
         $user;
-        if(!isset($this->profile) || is_null(User::find($this->id)))
+
+        if(!isset($this->profile) && is_null(User::find($this->id)))
             $user = new User();
         else
             $user = User::find($this->id);

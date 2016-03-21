@@ -11,8 +11,7 @@ use Exception;
 
 class FollowController extends Controller
 {
-    public function __construct()
-    {
+    public function __construct(){
         $this->middleware('auth');
     }
 
@@ -42,10 +41,20 @@ class FollowController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function remove($id){
-        $doctor = Auth::user()->info();
-        $doctor->stopFollowPatient($id);
-        // TODO Manage error
-        return redirect('follow');
+        try{
+            $doctor = Auth::user()->info();
+            $result = $doctor->stopFollowPatient($id);
+
+            if(!$result)
+                throw new Exception("Cannot stop following this patient!");
+
+            \Session::flash('alert-success','You stopped to follow this patient!');
+            return redirect('follow');
+        }
+        catch(Exception $e){
+            \Session::flash('alert-danger',$e->getMessage());
+            return redirect()->back();
+        }
     }
 
     /**
@@ -56,26 +65,28 @@ class FollowController extends Controller
      */
     public function save(Request $request){
     	try{
+            // Validate input before doing anything
+            $validator =$this->validate($request, [
+                'username' => 'required|max:255|exists:Users,username',
+            ]);
+
+            //  Get current user
             $doctor = Auth::user()->info();
-    	$patient = Patient::findByUsername($request->input('username'));
+        	$patient = Patient::findByUsername($request->input('username'));
 
-        $json;
-        if(!$patient)
-            throw new Exception("The patient doesnt exist");
+            if(!$patient)
+                throw new Exception("The patient doesnt exist");
 
-        if(!$doctor->followPatient($patient))
-            throw new Exception("Failed to be saved!");
+            if(!$doctor->followPatient($patient))
+                throw new Exception("Cannot follow this patient!");
 
-
-        $json['state'] = "success";
-        $json['message'] = "The user doctor follow a new patient!";
-       
+            \Session::flash('alert-success','You are now following this patient!');
+            return redirect('follow');
         }
         catch(Exception $e){
-            $json['state'] = "error";
-            $json['message'] = $e->getMessage();
+            \Session::flash('alert-danger',$e->getMessage());
+            return redirect()->back();
         }
-    	
-		return response()->json($json); 
+        
     }
 }

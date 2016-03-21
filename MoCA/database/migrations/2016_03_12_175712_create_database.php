@@ -75,8 +75,8 @@ class CreateDatabase extends Migration
         // Doctors Table
         Schema::create('Doctors', function (Blueprint $table) {
             $table->integer('id')->unsigned();
-            $table->string('name');
-            $table->string('firstname');
+            $table->string('name')->nullable();
+            $table->string('firstname')->nullable();
             $table->integer('idPlace')->unsigned();
             $table->integer('idRole')->unsigned();
             $table->foreign('id')->references('id')->on('Users');

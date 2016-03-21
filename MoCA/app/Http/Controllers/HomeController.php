@@ -24,11 +24,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        $type = new User_Type();
-        $type->name ="admin";
-        $type->save();
+    public function index(){
         return view('home');
     }
 }

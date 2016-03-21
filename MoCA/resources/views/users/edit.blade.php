@@ -28,9 +28,9 @@
                               <?= Form::label('type', 'User Type'); ?>
                               <?= Form::select("type", $a_types, (isset($user)) ? $user->type->id : null, ['placeholder' => 'Choose one..', 'class'=>'form-control','data-type'=>'user-'.$id]); ?>
                           </div>
-                          <div id="user-<?= $id ?>">
+                          <div id="user-info">
                             <?php if (isset($user)): ?>
-                              @include('users.more_user_info')
+                              @include('users.more_user_info', ['idType' => $user->type->id])
                             <?php endif ?>
                           </div>
                           <button type="submit" class="btn btn-primary">Save</button>
@@ -40,4 +40,5 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="{{ URL::asset('js/user.js') }}"></script>
 @endsection 

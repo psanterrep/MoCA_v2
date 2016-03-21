@@ -40,6 +40,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::group(['prefix' => 'user'], function () {
 		// Matches The "/user/new" URL
 		Route::get('/create', 'UserController@create');
+		// Matches The "/user/reloadUserInfo/{idType}" URL
+		Route::get('/reloaduserinfo/{idType}', 'UserController@reloaduserinfo');
 		// Matches The "/user/save/{id}" URL
 		Route::post('/save/{id}', 'UserController@save');
 		// Matches The "/user/edit/{id}" URL

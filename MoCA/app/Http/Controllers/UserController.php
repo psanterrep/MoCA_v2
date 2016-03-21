@@ -9,6 +9,7 @@ use App\User\Admin;
 use App\User\Doctor;
 use App\User\Patient;
 use App\User\User_Type;
+use View;
 
 class UserController extends Controller
 {
@@ -113,6 +114,16 @@ class UserController extends Controller
             \Session::flash('alert-danger',$e->getMessage());
             return redirect()->back();
        }
+    }
+
+    /**
+     * Update the view user information.
+     *
+     * @param  Int  $idType
+     * @return JSon response
+     */
+    public function reloaduserinfo($idType){
+        return response()->json(['test'=>'test','html' => View::make('users.more_user_info')->with(['idType'=>$idType])->render()]);
     }
 
     /**

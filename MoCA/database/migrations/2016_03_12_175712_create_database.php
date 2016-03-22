@@ -3,6 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\User\User_Type;
+use App\Consultation_Type;
 
 class CreateDatabase extends Migration
 {

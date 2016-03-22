@@ -4,6 +4,6 @@ $(document).ready(function() {
       dateFormat: 'yy-mm-dd',
       timeFormat: 'HH:mm',
       stepMinute: 15,
-      showButtonPanel : false
+      showButtonPanel : true // TODO Check with Chrome
     });
 });

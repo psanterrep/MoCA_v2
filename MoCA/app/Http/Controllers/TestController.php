@@ -53,10 +53,12 @@ class TestController extends Controller
 			$validator =$this->validate($request, [
 				'name' => 'required|max:255',
 			]);
-
+			// TODO validate name and version for the futur, cannot edit a test if a new version exists
 			$test;
-			if($id == 0)
+			if($id == 0){
 				$test = new Test();
+				$test->version = 1;	
+			}
 			else{
 				$test = Test::findOrFail($id);
 				

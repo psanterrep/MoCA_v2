@@ -43,7 +43,7 @@ class Doctor extends Model
      * @return Boolean
      */
     public function followPatient(Patient $patient){
-        if($this->isFollowingPatient($patient->id)){
+        if(!$this->isFollowingPatient($patient->id)){
             $follow = new Follow();
             $follow->idDoctor = $this->id;
             $follow->idPatient = $patient->id;
@@ -94,8 +94,8 @@ class Doctor extends Model
      * @return Boolean
      */
     public function isFollowingPatient($idPatient){
-        foreach($this->follows() as $follow){
-            if($patient->id == $idPatient)
+        foreach($this->follows()->get() as $follow){
+            if($follow->patient->id == $idPatient)
                 return true;
         }
         return false;

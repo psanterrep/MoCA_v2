@@ -20,7 +20,7 @@
                     <?php foreach($consultations as $consultation): ?>
                         <tr>
                             <td><?= isset($consultation->patients()->get()->first()->profile->username) ? $consultation->patients()->get()->first()->profile->username : ""; ?></td>
-                            <td><?= isset($consultation->type) ? $consultation->type->name: ""; ?></td>
+                            <td><?= $consultation->type->name ?></td>
                             <td><?= $consultation->date; ?></td>
                             <td><?= isset($consultation->comment) ? $consultation->comment : ""; ?></td>
                             <td class="text-center">

@@ -33,7 +33,7 @@
                               @include('users.more_user_info', ['idType' => $user->type->id])
                             <?php endif ?>
                           </div>
-                          <button type="submit" class="btn btn-primary">Save</button>
+                          <button type="submit" class="btn btn-primary pull-right">Save</button>
                      <?= Form::close() ?>
                 </div>
             </div>

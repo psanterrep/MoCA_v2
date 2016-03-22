@@ -14,17 +14,25 @@
                           <th>Type</th>
                           <th>Date</th>
                           <th>Comment</th>
-                          <th>Edit</th>
-                          <th>Cancel</th>
+                          <th class="text-center">Edit</th>
+                          <th class="text-center">Cancel</th>
                       </tr>  
                     <?php foreach($consultations as $consultation): ?>
                         <tr>
-                            <td><?php echo isset($consultation->patients()->get()->first()->profile->username) ? $consultation->patients()->get()->first()->profile->username : ""; ?></td>
-                            <td><?php echo isset($consultation->type) ? $consultation->type->name: ""; ?></td>
-                            <td><?php echo $consultation->date; ?></td>
-                            <td><?php echo isset($consultation->comment) ? $consultation->comment : ""; ?></td>
-                            <td><a href="/consultation/edit/<?= $consultation->id ?>">Edit</a></td>
-                            <td><a href="/consultation/cancel/<?= $consultation->id ?>">Cancel</a></td>
+                            <td><?= isset($consultation->patients()->get()->first()->profile->username) ? $consultation->patients()->get()->first()->profile->username : ""; ?></td>
+                            <td><?= isset($consultation->type) ? $consultation->type->name: ""; ?></td>
+                            <td><?= $consultation->date; ?></td>
+                            <td><?= isset($consultation->comment) ? $consultation->comment : ""; ?></td>
+                            <td class="text-center">
+                                <a class="text-orange" href="/consultation/edit/<?= $consultation->id ?>">
+                                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="text-red" href="/consultation/cancel/<?= $consultation->id ?>">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </table>

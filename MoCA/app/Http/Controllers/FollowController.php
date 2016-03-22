@@ -74,8 +74,9 @@ class FollowController extends Controller
             $doctor = Auth::user()->info();
         	$patient = Patient::findByUsername($request->input('username'));
 
+
             if(!$patient)
-                throw new Exception("The patient doesnt exist");
+                throw new Exception("This patient doesn't exist!");
 
             if(!$doctor->followPatient($patient))
                 throw new Exception("Cannot follow this patient!");

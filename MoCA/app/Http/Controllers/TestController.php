@@ -70,6 +70,7 @@ class TestController extends Controller
 			}
 				
 			$test->name = $request->input('name');
+			$test->active = ($request->input('active') !== null && $request->input('active') == 'on') ? true : false;
 
 			if($request->hasFile('file')){
 				//	Get temp file

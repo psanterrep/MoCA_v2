@@ -13,7 +13,7 @@
                               <?= Form::label('username', 'Username of the patient'); ?>
                               <?= Form::text("username", '', $attributes = array("class"=>"form-control")); ?>
                           </div>
-                      <button type="submit" class="btn btn-primary">Save</button>
+                      <button type="submit" class="btn btn-primary pull-right">Follow</button>
                       <?= Form::close(); ?>
                 </div>
             </div>

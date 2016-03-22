@@ -8,26 +8,37 @@
                 <div class="panel-heading">Patients</div>
                 <div class="panel-body">
                     @include('errors.messages')
-                    <a href="/follow/add">Add Patient</a>
+
+                    <a href="/follow/add">
+                        <button type="button" class="btn btn-primary" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true">&nbsp;</span>Add Patient
+                        </button>
+                    </a>
                     <table class="table table-striped">
                       <tr>
-                          <th>ID</th>
                           <th>Username</th>
                           <th>Starting to follow at</th>
                           <th>Ended to follow at</th>
                           <th>Email</th>
-                          <th>Consultation</th>
-                          <th>Remove</th>
+                          <th class="text-center">Consultation</th>
+                          <th class="text-center">Remove</th>
                       </tr>  
                     <?php foreach($follows as $follow): ?>
                         <tr>
-                            <td><?php echo $follow->patient->id; ?></td>
-                            <td><?php echo $follow->patient->profile->username; ?></td>
-                            <td><?php echo $follow->dateStartFollowed; ?></td>
-                            <td><?php echo $follow->dateEndFollowed; ?></td>
-                            <td><?php echo $follow->patient->profile->email; ?></td>
-                            <td><a href="/consultation/add/<?= $follow->patient->id ?>">Add</a></td>
-                            <td><a href="/follow/remove/<?= $follow->id ?>">Stop follow</a></td>
+                            <td><?= $follow->patient->profile->username; ?></td>
+                            <td><?= $follow->dateStartFollowed; ?></td>
+                            <td><?= $follow->dateEndFollowed; ?></td>
+                            <td><?= $follow->patient->profile->email; ?></td>
+                            <td class="text-center">
+                                <a class="text-green" href="/consultation/add/<?= $follow->patient->id ?>">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="text-red" href="/follow/remove/<?= $follow->id ?>">
+                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </table>

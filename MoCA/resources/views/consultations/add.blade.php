@@ -34,11 +34,12 @@
 						<?= Form::label('comment', 'Comment'); ?>
 						<?= Form::textarea("comment", '', $attributes = array("class"=>"form-control")); ?>
 					</div>
-					<button type="submit" class="btn btn-primary">Save</button>
+					<button type="submit" class="btn btn-primary pull-right">Add</button>
 					<?= Form::close() ?>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="{{ URL::asset('js/consultation.js') }}"></script>
 @endsection 

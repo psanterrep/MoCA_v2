@@ -155,6 +155,7 @@ class CreateDatabase extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('version');
+            $table->boolean('active');
             $table->string('path');
             $table->timestamps();
         });

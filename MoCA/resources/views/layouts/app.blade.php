@@ -13,12 +13,18 @@
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- DatePicker -->
+    <link href="{{ asset('lib/jquery-ui-1.11.4.custom/jquery-ui.css') }}" rel="stylesheet">
+    <link href="{{ asset('lib/jquery-ui-1.11.4.custom/jquery-ui-timepicker-addon.css') }}" rel="stylesheet">
 
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <!-- DatePicker -->
+    <script src="{{ asset('lib/jquery-ui-1.11.4.custom/jquery-ui.js') }}"></script>
+    <script src="{{ asset('lib/jquery-ui-1.11.4.custom/jquery-ui-timepicker-addon.js') }}"></script>
+    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
 
     <style>
         body {
@@ -53,16 +59,24 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>
-                    @if (!Auth::guest() && Auth::user()->isDoctor())
-                        <li><a href="{{ url('/follow') }}">My Patients</a></li>
-                    @endif
+                    <?php /* ?>
                     @if (!Auth::guest() && Auth::user()->isAdmin())
+                    <?php */ ?>
                         <li><a href="{{ url('/user') }}">Users</a></li>
                         <li><a href="{{ url('/test') }}">Tests</a></li>
+                    <?php /* ?>
+                    @if (!Auth::guest() && Auth::user()->isDoctor())
+                    <?php */ ?>
+                        <li><a href="{{ url('/follow') }}">My Patients</a></li>
+                    <?php /* ?>
+                    @endif
                     @endif
                     @if (!Auth::guest() && (Auth::user()->isDoctor() || Auth::user()->isPatient()))
-                        <li><a href="{{ url('/consultation') }}">My Consultation</a></li>
+                    <?php */ ?>
+                        <li><a href="{{ url('/consultation') }}">My Consultations</a></li>
+                    <?php /* ?>
                     @endif
+                    <?php */ ?>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
@@ -73,7 +87,7 @@
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                {{ Auth::user()->username }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">

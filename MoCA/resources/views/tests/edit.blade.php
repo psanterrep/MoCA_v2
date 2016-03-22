@@ -12,12 +12,15 @@
                      <?= Form::open(array("url" => "/test/save/{$id}","method" => "POST", 'files' => true)); ?>
                           <div class="form-group">
                               <?= Form::label('name', 'Name'); ?>
-                              <?= Form::text("name", isset($test) ? $test->name : '', $attributes = array("class"=>"form-control")); ?>
+                              <?= Form::text('name', isset($test) ? $test->name : '', $attributes = array("class"=>"form-control")); ?>
                           </div>
                           <div class="form-group">
-                              <?php $version =  isset($test) ? $test->version : '1'?>
+                              <?php $version =  isset($test) ? $test->version : '1'; ?>
                               <?= Form::label('', 'Version '.$version ); ?>
-                              <span> </span>
+                          </div>
+                          <div class="form-group">
+                              <?= Form::checkbox('active', null, isset($test) ? $test->active : true); ?>
+                              <?= Form::label('active', 'Active'); ?>
                           </div>
                           <div class="form-group">
                               <?= Form::label('file', 'File Path'); ?>
@@ -29,7 +32,6 @@
                               <?php endif; ?>
                               <?= Form::file('file') ?>
                           </div>
-
                       <button type="submit" class="btn btn-primary">Save</button>
                       <?= Form::close(); ?>
                 </div>

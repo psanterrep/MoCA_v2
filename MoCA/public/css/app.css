@@ -1,0 +1,19 @@
+.text-red {
+  color: #a10000; }
+
+.text-red:hover {
+  color: #800000; }
+
+.text-orange {
+  color: #ee8823; }
+
+.text-orange:hover {
+  color: #be6c1c; }
+
+.text-green {
+  color: #187c1c; }
+
+.text-green:hover {
+  color: #0f4d11; }
+
+/*# sourceMappingURL=app.css.map */

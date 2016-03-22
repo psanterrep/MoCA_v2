@@ -20,6 +20,7 @@
                           <th>Path</th>
                           <th class="text-center">Active</th>
                           <th class="text-center">Edit</th>
+                          <th class="text-center">Delete</th>
                       </tr>  
                     <?php foreach($tests as $test): ?>
                         <tr>
@@ -30,6 +31,11 @@
                             <td class="text-center">
                                 <a class="text-orange" href="/test/edit/<?= $test->id ?>">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a class="text-red" href="/test/delete/<?= $test->id ?>">
+                                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                 </a>
                             </td>
                         </tr>

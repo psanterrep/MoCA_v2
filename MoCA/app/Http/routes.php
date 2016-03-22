@@ -85,5 +85,7 @@ Route::group(['middleware' => 'web'], function () {
 		Route::get('/edit/{id}', 'TestController@edit');
 		// Matches The "/test/save/" URL
 		Route::post('/save/{id}', 'TestController@save');
+		// Matches The "/test/delete/{id}" URL
+		Route::get('/delete/{id}', 'TestController@delete');
 	});
 });

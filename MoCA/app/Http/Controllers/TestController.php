@@ -53,7 +53,7 @@ class TestController extends Controller
 			$validator =$this->validate($request, [
 				'name' => 'required|max:255',
 			]);
-			// TODO validate name and version for the futur, cannot edit a test if a new version exists
+
 			$test;
 			if($id == 0){
 				$test = new Test();
@@ -90,5 +90,26 @@ class TestController extends Controller
 			\Session::flash('alert-danger',$e->getMessage());
 			return redirect()->back();
 		}
+    }
+
+    /**
+     * Show view for edit Test
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function delete($id){
+		try{
+    		$test = Test::findOrFail($id);
+            if(!$test->delete())
+                throw new Exception("Cannot remove this test!");
+            
+            \Session::flash('alert-success','This test have been deleted!');
+            return redirect('test');
+
+        }catch(Exception $e){
+            \Session::flash('alert-danger',$e->getMessage());
+            return redirect()->back();
+        
+        }
     }
 }

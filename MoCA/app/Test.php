@@ -36,4 +36,14 @@ class Test extends Model
 		$file->move($this->getBasePath(), $filename);
 		$this->save();
     }
+
+    /*
+    *   Check if this test is the latest version
+    */
+    public function isLatestVersion(){
+        $test = Test::where('name','=',$this->name)->orderBy('version','DESC')->first();
+        if($test->version > $this->version)
+            return false;
+        return true;
+    }
 }

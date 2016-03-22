@@ -8,11 +8,19 @@
                 <div class="panel-heading"><?= isset($test) ? "Edit" : "Add"; ?> a test</div>
                 <div class="panel-body">
                     @include('errors.messages')
-                    <?php $id = isset($test) ? $test->id : 0; ?>
+                    <?php 
+                        $id = isset($test) ? $test->id : 0; 
+                        $edit = isset($test) ? $test->isLatestVersion() : true; 
+                      ?>
                      <?= Form::open(array("url" => "/test/save/{$id}","method" => "POST", 'files' => true)); ?>
                           <div class="form-group">
-                              <?= Form::label('name', 'Name'); ?>
-                              <?= Form::text('name', isset($test) ? $test->name : '', $attributes = array("class"=>"form-control")); ?>
+                              @if($edit)
+                                  <?= Form::label('name', 'Name'); ?>
+                                  <?= Form::text('name', isset($test) ? $test->name : '', $attributes = array("class"=>"form-control")); ?>
+                              @else
+                                  <?= Form::label('name', 'Name : '. $test->name); ?>
+                                  <?= Form::hidden('name', isset($test) ? $test->name : '', $attributes = array("class"=>"form-control")); ?>
+                              @endif
                           </div>
                           <div class="form-group">
                               <?php $version =  isset($test) ? $test->version : '1'; ?>
@@ -30,7 +38,9 @@
                                   <?= "Current test path is '{$test->path}'"; ?>
                                   </p>
                               <?php endif; ?>
-                              <?= Form::file('file') ?>
+                              @if($edit)
+                                  <?= Form::file('file') ?>
+                              @endif
                           </div>
                       <button type="submit" class="btn btn-primary">Save</button>
                       <?= Form::close(); ?>

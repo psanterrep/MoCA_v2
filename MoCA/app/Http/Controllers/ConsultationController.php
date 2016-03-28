@@ -9,6 +9,7 @@ use App\Consultation;
 use App\Test;
 use App\Consultation\Consultation_Type;
 use App\User\Patient;
+use View;
 
 class ConsultationController extends Controller
 {
@@ -22,9 +23,31 @@ class ConsultationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
-    	$now = date('Y-m-d H:i:s');
-		$consultations = Auth::user()->info()->consultations()->where('date','>',$now)->get();
+		$now = date('Y-m-d H:i:s');
+		$consultations = Auth::user()->info()->consultations()->where('date','>',$now)->orderBy('date','ASC')->get();   	
     	return view('consultations.index', ['consultations' => $consultations]);
+    }
+
+
+    /**
+     * Show the consultation list for a patient specified in the search
+     *
+     * @param  Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateConsultationList(Request $request){
+    	$patientName = $request->input('name');
+    	$patients = Patient::getPatientsWithName($patientName);
+		$consultations = Consultation::select(array('Consultations.id','Consultations.idType','Consultations.date','Consultations.comment'))
+										->join('PatientsConsultations', 'PatientsConsultations.idConsultation', '=', 'Consultations.id')
+										->join('DoctorsConsultations', 'DoctorsConsultations.idConsultation', '=', 'Consultations.id')
+										->where('DoctorsConsultations.idDoctor','=',Auth::user()->id)
+										->orderBy('date', 'DESC');
+		if($patientName != '')
+			$consultations->whereIn('PatientsConsultations.idPatient',$patients);
+
+		$consultations = $consultations->get();
+		return response()->json(['html' => View::make('consultations.items')->with(['consultations'=>$consultations])->render()]);
     }
 
     /**

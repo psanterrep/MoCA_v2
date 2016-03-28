@@ -75,4 +75,22 @@ class Patient extends Model
         return false;
      }
 
+     /**
+     *  Return all id where username is similar to the search
+     *
+     * @param  String  $name
+     * @return Array of id
+     */
+     public static function getPatientsWithName($name){
+        $name = '%'.$name.'%';
+        $users = User::where('username','LIKE',$name)->get();
+        $ids = [];
+
+        //  Transform all user to patient
+        foreach ($users as $user) {
+            if($user->isPatient())
+                $ids[] = $user->id;
+        }
+        return $ids;
+     }
 }

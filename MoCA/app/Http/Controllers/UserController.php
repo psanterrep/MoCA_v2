@@ -123,7 +123,7 @@ class UserController extends Controller
      * @return JSon response
      */
     public function reloaduserinfo($idType){
-        return response()->json(['test'=>'test','html' => View::make('users.more_user_info')->with(['idType'=>$idType])->render()]);
+        return response()->json(['html' => View::make('users.more_user_info')->with(['idType'=>$idType])->render()]);
     }
 
     /**

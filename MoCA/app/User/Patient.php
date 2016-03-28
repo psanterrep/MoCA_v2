@@ -32,7 +32,7 @@ class Patient extends Model
      */
     public function consultations()
     {
-        return $this->belongsToMany('App\Consultation','PatientConsultations','idPatient','idConsultation')->withTimestamps();
+        return $this->belongsToMany('App\Consultation','PatientsConsultations','idPatient','idConsultation')->withTimestamps();
     }
 
     /**

@@ -164,7 +164,7 @@ class CreateDatabase extends Migration
         // ConsultationTests Table
         Schema::create('ConsultationsTests', function (Blueprint $table) {
             $table->increments('id');
-            $table->double('result');
+            $table->double('result')->nullable();;
             $table->integer('idConsultation')->unsigned();
             $table->integer('idTest')->unsigned();
             $table->foreign('idConsultation')->references('id')->on('Consultations');

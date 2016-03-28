@@ -10,6 +10,7 @@ use App\Test;
 use App\Consultation\Consultation_Type;
 use App\User\Patient;
 use View;
+use Hash;
 
 class ConsultationController extends Controller
 {
@@ -18,26 +19,40 @@ class ConsultationController extends Controller
 	}
 
 	/**
-     * Show the consultation dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(){
+	 * Show the consultation dashboard.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function index(){
 		$now = date('Y-m-d H:i:s');
-		$consultations = Auth::user()->info()->consultations()->where('date','>',$now)->orderBy('date','ASC')->get();   	
-    	return view('consultations.index', ['consultations' => $consultations]);
-    }
+		$user = Auth::user();
+		$consultations = $user->info()->consultations()->where('date','>',$now)->orderBy('date','ASC')->get();  
+
+		/*$consultation = Consultation::findOrFail(20);
+			$canPassTest = $consultation->canPassTest(3);
+			if($canPassTest){
+				foreach ($consultation->doctors()->get() as $doctor) {
+					if($doctor->profile->username == "psanterrep")
+						return response()->json(['passwordMatch'=>1]);
+				}
+			}*/
+
+		if(Auth::user()->isPatient()) 	
+			return view('consultations.indexpatient', ['consultations' => $consultations]);
+		elseif(Auth::user()->isDoctor())
+			return view('consultations.indexdoctor', ['consultations' => $consultations]);
+	}
 
 
-    /**
-     * Show the consultation list for a patient specified in the search
-     *
-     * @param  Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function updateConsultationList(Request $request){
-    	$patientName = $request->input('name');
-    	$patients = Patient::getPatientsWithName($patientName);
+	/**
+	 * Show the consultation list for a patient specified in the search
+	 *
+	 * @param  Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function updateConsultationList(Request $request){
+		$patientName = $request->input('name');
+		$patients = Patient::getPatientsWithName($patientName);
 		$consultations = Consultation::select(array('Consultations.id','Consultations.idType','Consultations.date','Consultations.comment'))
 										->join('PatientsConsultations', 'PatientsConsultations.idConsultation', '=', 'Consultations.id')
 										->join('DoctorsConsultations', 'DoctorsConsultations.idConsultation', '=', 'Consultations.id')
@@ -48,23 +63,48 @@ class ConsultationController extends Controller
 
 		$consultations = $consultations->get();
 		return response()->json(['html' => View::make('consultations.items')->with(['consultations'=>$consultations])->render()]);
-    }
+	}
 
-    /**
-     * Show the consultation edit page.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id){
-    	$consultation = Consultation::findOrFail($id);
-    	$tests = Test::all();
-    	return view('consultations.edit', ['consultation' => $consultation, 'tests'=> $tests]);
-    }
+	/**
+	 * Activate a test for a user
+	 *
+	 * @param  Request  $request
+	 * @return \Illuminate\Http\Response
+	 */
+	public function activateSupervisedTest($idConsultation, $idTest, Request $request){
+		
+		try{
+			$consultation = Consultation::findOrFail($idConsultation);
+			$canPassTest = $consultation->canPassTest($idTest);
+			if($canPassTest){
+				foreach ($consultation->doctors()->get() as $doctor) {
+					if($doctor->profile->username == $request->input('password'))
+						return response()->json(['passwordMatch'=>true]);
+				}
+			}
+			return response()->json(['passwordMatch'=>false,'error'=>'Password not matching']);
+			
+		}
+		catch(Exception $e){
+			return response()->json(['passwordMatch'=>false,'error'=>$e->getMessage()]);
+		}
+	}
 
-    /**		
+	/**
+	 * Show the consultation edit page.
+	 *
+	 * @return \Illuminate\Http\Response
+	 */
+	public function edit($id){
+		$consultation = Consultation::findOrFail($id);
+		$tests = Test::all();
+		return view('consultations.edit', ['consultation' => $consultation, 'tests'=> $tests]);
+	}
+
+	/**		
 	* Show the page add consultation 
 	*
-    * @param  int  $id
+	* @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
 	public function add($idPatient){
@@ -76,8 +116,8 @@ class ConsultationController extends Controller
 	/**		
 	* Show the page add consultation 
 	*
-    * @param  Request  $request
-    * @param  int  $id
+	* @param  Request  $request
+	* @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
 	public function save(Request $request, $idPatient){
@@ -106,8 +146,8 @@ class ConsultationController extends Controller
 	/**		
 	* Update consultation 
 	*
-    * @param  Request  $request
-    * @param  int  $id
+	* @param  Request  $request
+	* @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
 	public function update(Request $request, $idConsultation){
@@ -134,7 +174,7 @@ class ConsultationController extends Controller
 	/**		
 	* Cancel consultation 
 	*
-    * @param  int  $id
+	* @param  int  $id
 	* @return \Illuminate\Http\Response
 	*/
 	public function cancel($idConsultation){

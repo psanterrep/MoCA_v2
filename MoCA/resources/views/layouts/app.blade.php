@@ -24,7 +24,8 @@
     <!-- DatePicker -->
     <script src="{{ asset('lib/jquery-ui-1.11.4.custom/jquery-ui.js') }}"></script>
     <script src="{{ asset('lib/jquery-ui-1.11.4.custom/jquery-ui-timepicker-addon.js') }}"></script>
-    {{-- <script src="{{ asset('js/app.js') }}"></script> --}}
+    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script src="{{ asset('js/bootbox.min.js') }}"></script>
 
     <style>
         body {

@@ -23,24 +23,26 @@
                           <th class="text-center">Consultation</th>
                           <th class="text-center">Remove</th>
                       </tr>  
-                    <?php foreach($follows as $follow): ?>
-                        <tr>
-                            <td><?= $follow->patient->profile->username; ?></td>
-                            <td><?= $follow->dateStartFollowed; ?></td>
-                            <td><?= $follow->dateEndFollowed; ?></td>
-                            <td><?= $follow->patient->profile->email; ?></td>
-                            <td class="text-center">
-                                <a class="text-green" href="/consultation/add/<?= $follow->patient->id ?>">
-                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                            <td class="text-center">
-                                <a class="text-red" href="/follow/remove/<?= $follow->id ?>">
-                                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
+                    <?php 
+                        if(count($follows)>0)
+                            foreach($follows as $follow): ?>
+                            <tr>
+                                <td><?= $follow->patient->profile->username; ?></td>
+                                <td><?= $follow->dateStartFollowed; ?></td>
+                                <td><?= $follow->dateEndFollowed; ?></td>
+                                <td><?= $follow->patient->profile->email; ?></td>
+                                <td class="text-center">
+                                    <a class="text-green" href="/consultation/add/<?= $follow->patient->id ?>">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                                <td class="text-center">
+                                    <a class="text-red" href="/follow/remove/<?= $follow->id ?>">
+                                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </table>
                 </div>
             </div>

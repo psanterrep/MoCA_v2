@@ -121,4 +121,13 @@ class Consultation extends Model
         $this->save();
         return true;
     }
+
+    /**
+    *  Check if the user have already done this test
+    * @param int $idTest
+    * @return Boolean
+    */
+    public function canPassTest($idTest){
+        return $this->tests()->where('idTest','=',$idTest)->whereNull('result')->count() > 0;
+    }
 }

@@ -40,7 +40,7 @@ function takeTest(idConsultation,idTest){
 				success : function(response){
 					console.log(response);
 					if(response.passwordMatch){
-						// TODO
+						window.location = "/consultation/takeTest/"+idConsultation+"/"+idTest;
 					}
 					else{
 						if(response.error){
@@ -52,4 +52,17 @@ function takeTest(idConsultation,idTest){
 			});
         }
     });
+}
+
+/*
+*	Put the test in fullscreen
+*/
+function fullscreen(){
+	if ( screenfull ) {
+		var target = document.getElementById('jspsych-target');
+		document.onkeydown = function (e) {
+			e.preventDefault();		
+		}
+		screenfull.request( target );
+	}
 }

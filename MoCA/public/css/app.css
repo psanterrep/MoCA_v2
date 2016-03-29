@@ -16,4 +16,22 @@
 .text-green:hover {
   color: #0f4d11; }
 
+.psych_window {
+  color: white;
+  background: black;
+  vertical-align: middle;
+  text-align: center;
+  min-height: 500px;
+  padding: 50px;
+  margin: 0 auto; }
+
+.psych_window .largeText {
+  font-weight: bold;
+  font-size: 400%; }
+
+.psych_window .mediumText {
+  font-weight: bold;
+  color: #00b3ee;
+  font-size: 150%; }
+
 /*# sourceMappingURL=app.css.map */

@@ -192,4 +192,23 @@ class ConsultationController extends Controller
 			return redirect()->back();
 		}
 	}
+
+	/**		
+	* Show the page for a test for this consultation 
+	*
+	* @param  int  $idConsultation
+	* @param  int  $idTest
+	* @return \Illuminate\Http\Response
+	*/
+	public function takeTest($idConsultation, $idTest){
+		try{
+			//	TODO Add validation check here
+			$consultation = Consultation::findOrFail($idConsultation);
+			$test = Test::findOrFail($idTest);
+			return view('consultations.test', ['consultation' => $consultation,'test'=>$test]);
+		}catch(Exception $e){
+			\Session::flash('alert-danger',$e->getMessage());
+			return redirect()->back();
+		}
+	}
 }

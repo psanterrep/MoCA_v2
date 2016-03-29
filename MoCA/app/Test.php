@@ -24,6 +24,13 @@ class Test extends Model
     }
 
     /*
+    *   Full path to test
+    */
+    public function getFullPath(){
+        return storage_path()."/tests/".$this->path;
+    }
+
+    /*
     *	Upload file
     */
     public function uploadFile($file){

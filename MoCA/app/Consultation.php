@@ -130,4 +130,18 @@ class Consultation extends Model
     public function canPassTest($idTest){
         return $this->tests()->where('idTest','=',$idTest)->whereNull('result')->count() > 0;
     }
+
+    /**
+    * Saved the result for a test
+    *
+    */
+    public function saveResult($idTest, $result){
+        foreach ($this->tests as $test) {
+            if($test->id == $idTest){
+                $test->pivot->result = $result;
+                return $test->pivot->save();;
+            }
+        }
+        return false;
+    }
 }

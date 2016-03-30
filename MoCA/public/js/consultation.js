@@ -60,9 +60,32 @@ function takeTest(idConsultation,idTest){
 function fullscreen(){
 	if ( screenfull ) {
 		var target = document.getElementById('jspsych-target');
+		target.style.display = "block";
 		document.onkeydown = function (e) {
 			e.preventDefault();		
 		}
 		screenfull.request( target );
 	}
+}
+
+/*
+*	Save result in database
+*/
+function saveResult(result){
+	var token = $('input[name="_token"]').first().val();
+	var consultation = $('input[name="consultation"]').first().val();
+	var test = $('input[name="test"]').first().val();
+	var data = {result : JSON.stringify(result), _token : token};
+    $.ajax({
+		type: "POST",
+		url: '/consultation/saveTestResult/'+ consultation +'/' + test,
+		data: data,
+		dataType: 'JSON',
+		success : function(response){
+			console.log(response);
+			if(response.error){
+				bootbox.alert(response.error);
+			}
+		},
+	});
 }

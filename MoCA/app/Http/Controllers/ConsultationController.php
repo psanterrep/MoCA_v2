@@ -28,15 +28,6 @@ class ConsultationController extends Controller
 		$user = Auth::user();
 		$consultations = $user->info()->consultations()->where('date','>',$now)->orderBy('date','ASC')->get();  
 
-		/*$consultation = Consultation::findOrFail(20);
-			$canPassTest = $consultation->canPassTest(3);
-			if($canPassTest){
-				foreach ($consultation->doctors()->get() as $doctor) {
-					if($doctor->profile->username == "psanterrep")
-						return response()->json(['passwordMatch'=>1]);
-				}
-			}*/
-
 		if(Auth::user()->isPatient()) 	
 			return view('consultations.indexpatient', ['consultations' => $consultations]);
 		elseif(Auth::user()->isDoctor())
@@ -69,9 +60,11 @@ class ConsultationController extends Controller
 	 * Activate a test for a user
 	 *
 	 * @param  Request  $request
+	 * @param  int  $idConsultation
+	 * @param  int  $idTest
 	 * @return \Illuminate\Http\Response
 	 */
-	public function activateSupervisedTest($idConsultation, $idTest, Request $request){
+	public function activateSupervisedTest(Request $request, $idConsultation, $idTest){
 		
 		try{
 			$consultation = Consultation::findOrFail($idConsultation);
@@ -117,7 +110,7 @@ class ConsultationController extends Controller
 	* Show the page add consultation 
 	*
 	* @param  Request  $request
-	* @param  int  $id
+	* @param  int  $idPatient
 	* @return \Illuminate\Http\Response
 	*/
 	public function save(Request $request, $idPatient){
@@ -147,7 +140,7 @@ class ConsultationController extends Controller
 	* Update consultation 
 	*
 	* @param  Request  $request
-	* @param  int  $id
+	* @param  int  $idConsultation
 	* @return \Illuminate\Http\Response
 	*/
 	public function update(Request $request, $idConsultation){
@@ -209,6 +202,25 @@ class ConsultationController extends Controller
 		}catch(Exception $e){
 			\Session::flash('alert-danger',$e->getMessage());
 			return redirect()->back();
+		}
+	}
+
+	/**		
+	* Save result for a test
+	*
+	* @param  int  $idConsultation
+	* @param  int  $idTest
+	* @return \Illuminate\Http\Response
+	*/
+	public function saveTestResult(Request $request, $idConsultation, $idTest){
+		try{
+			$consultation = Consultation::findOrFail($idConsultation);
+			if(!$consultation->saveResult($idTest, $request->input('result')))
+				return response()->json(['error'=>'Cannot save the result for this test']);
+
+			//return response()->json(['message'=>'Data saved!']);
+		}catch(Exception $e){
+			return response()->json(['error'=> $e->getMessage()]);
 		}
 	}
 }

@@ -78,6 +78,8 @@ Route::group(['middleware' => 'web'], function () {
 		Route::get('/takeTest/{idConsultation}/{idTest}', 'ConsultationController@takeTest');
 		// Matches The "/consultation/updateConsultationList" URL
 		Route::post('/updateConsultationList', 'ConsultationController@updateConsultationList');
+		// Matches The "/consultation/saveTestResult/{idConsultation}/{idTest}" URL
+		Route::post('/saveTestResult/{idConsultation}/{idTest}', 'ConsultationController@saveTestResult');
 		// Matches The "/consultation/update/{id}" URL
 		Route::get('/cancel/{id}', 'ConsultationController@cancel');
 	});

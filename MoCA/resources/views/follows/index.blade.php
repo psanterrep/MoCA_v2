@@ -20,6 +20,7 @@
                           <th>Starting to follow at</th>
                           <th>Ended to follow at</th>
                           <th>Email</th>
+                          <th class="text-center">Result</th>
                           <th class="text-center">Consultation</th>
                           <th class="text-center">Remove</th>
                       </tr>  
@@ -31,6 +32,9 @@
                                 <td><?= $follow->dateStartFollowed; ?></td>
                                 <td><?= $follow->dateEndFollowed; ?></td>
                                 <td><?= $follow->patient->profile->email; ?></td>
+                                <td class="text-center">
+                                    <a href="/follow/showresults/<?= $follow->patient->id ?>">View</a>
+                                </td>
                                 <td class="text-center">
                                     <a class="text-green" href="/consultation/add/<?= $follow->patient->id ?>">
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>

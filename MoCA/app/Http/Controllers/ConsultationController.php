@@ -218,9 +218,27 @@ class ConsultationController extends Controller
 			if(!$consultation->saveResult($idTest, $request->input('result')))
 				return response()->json(['error'=>'Cannot save the result for this test']);
 
-			//return response()->json(['message'=>'Data saved!']);
 		}catch(Exception $e){
 			return response()->json(['error'=> $e->getMessage()]);
+		}
+	}
+
+	/**		
+	* Show result for all test for a consultation
+	*
+	* @param  int  $id
+	* @return \Illuminate\Http\Response
+	*/
+	public function showresults($id){
+		try{
+			$consultation = Consultation::findOrFail($id);
+			if(!$consultation->hasResult())
+				return response()->json(['error'=>'No result found for this consultation']);
+
+			return view('consultations.testresults', ['consultation' => $consultation]);
+		}catch(Exception $e){
+			\Session::flash('alert-danger',$e->getMessage());
+			return redirect()->back();
 		}
 	}
 }

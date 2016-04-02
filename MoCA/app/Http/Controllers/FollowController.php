@@ -90,4 +90,21 @@ class FollowController extends Controller
         }
         
     }
+
+    /**     
+    * Show result for all test for a patient
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function showresults($id){
+        try{
+            $patient = Patient::findOrFail($id);
+
+            return view('follows.testresults', ['patient' => $patient]);
+        }catch(Exception $e){
+            \Session::flash('alert-danger',$e->getMessage());
+            return redirect()->back();
+        }
+    }
 }

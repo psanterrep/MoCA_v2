@@ -4,6 +4,7 @@
     <th>Type</th>
     <th>Date</th>
     <th>Comment</th>
+    <th class="text-center">Result</th>
     <th class="text-center">Edit</th>
     <th class="text-center">Cancel</th>
 </tr>  
@@ -13,6 +14,11 @@
       <td><?= $consultation->type->name ?></td>
       <td><?= $consultation->date; ?></td>
       <td><?= isset($consultation->comment) ? $consultation->comment : ""; ?></td>
+      <td class="text-center">
+        <?php if($consultation->hasResult()):?>
+            <a href="/consultation/showresults/<?= $consultation->id ?>" >View</a>
+        <?php endif; ?>
+      </td>
       <td class="text-center">
           <a class="text-orange" href="/consultation/edit/<?= $consultation->id ?>">
               <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

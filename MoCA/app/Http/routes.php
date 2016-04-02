@@ -59,6 +59,8 @@ Route::group(['middleware' => 'web'], function () {
 		Route::post('/save', 'FollowController@save');
 		// Matches The "/follow/remove/{id}" URL
 		Route::get('/remove/{id}', 'FollowController@remove');
+		// Matches The "/follow/showresults/{id}" URL
+		Route::get('/showresults/{id}', 'FollowController@showresults');
 	});
 
 	// Consultation
@@ -82,6 +84,8 @@ Route::group(['middleware' => 'web'], function () {
 		Route::post('/saveTestResult/{idConsultation}/{idTest}', 'ConsultationController@saveTestResult');
 		// Matches The "/consultation/update/{id}" URL
 		Route::get('/cancel/{id}', 'ConsultationController@cancel');
+		// Matches The "/consultation/showresults/{id}" URL
+		Route::get('/showresults/{id}', 'ConsultationController@showresults');
 	});
 
 	 // Test

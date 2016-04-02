@@ -16,6 +16,7 @@
                         Incoming consultation
                         @include('consultations.items',['consultations' => $consultations])
                     </div>
+                    <button id="showButton" onclick="showAllConsultations('')" class="btn btn-primary pull-right">Show All</button>
                 </div>
             </div>
         </div>

@@ -13,20 +13,37 @@ $(document).ready(function() {
 		*/
 	$('#searchBar').on('input', function(){
 		var name = $(this).val();
-		var token = $('input[name="_token"]').first().val();
-    	var url = '/consultation/updateConsultationList';
-		$.ajax({
-			type: "POST",
-			url: url,
-			data: 'name='+name+'&_token='+token,
-			success : function(response){
-				$('#consultationList').empty().append(response.html);
-			},
-		});
+		updateConsultationList(name);
     });
 });
 
+/*
+*	Refresh consultation table view
+*/
+function updateConsultationList(name){
+	var token = $('input[name="_token"]').first().val();
+	var url = '/consultation/updateConsultationList';
+	$.ajax({
+		type: "POST",
+		url: url,
+		data: 'name='+name+'&_token='+token,
+		success : function(response){
+			$('#consultationList').empty().append(response.html);
+		},
+	});
+}
 
+/*
+*	Show all consultations
+*/
+function showAllConsultations(){
+	updateConsultationList("");
+	$('#showButton').hide();
+}
+
+/*
+*	Show the test page for a patient
+*/
 function takeTest(idConsultation,idTest){
 	bootbox.prompt({
         title: "Doctor : Enter your password", 

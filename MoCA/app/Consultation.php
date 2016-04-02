@@ -133,13 +133,28 @@ class Consultation extends Model
 
     /**
     * Saved the result for a test
-    *
+    * @param int $idTest
+    * @param json $result
+    * @return Boolean
     */
     public function saveResult($idTest, $result){
         foreach ($this->tests as $test) {
             if($test->id == $idTest){
                 $test->pivot->result = $result;
                 return $test->pivot->save();;
+            }
+        }
+        return false;
+    }
+
+    /**
+    *  Check if the user have already done a test
+    * @return Boolean
+    */
+    public function hasResult(){
+        foreach ($this->tests as $test) {
+            if(isset($test->pivot->result)){
+                return true;
             }
         }
         return false;

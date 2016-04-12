@@ -93,6 +93,11 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
+                            <?php if (App::getLocale() == "en"): ?>
+                                <li><a href="{{ url('/user/switchLang/fr') }}"><?= Lang::get('commons.french')?></a></li>
+                            <?php else: ?>
+                                <li><a href="{{ url('/user/switchLang/en') }}"><?= Lang::get('commons.english')?></a></li>
+                            <?php endif ?>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i><?= Lang::get('commons.logout')?></a></li>
                             </ul>
                         </li>

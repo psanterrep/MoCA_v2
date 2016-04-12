@@ -40,4 +40,6 @@ return [
 	'yes' => 'Yes',
 	'no' => 'No',
 	'export' => 'Export',
+	'english' => 'English',
+	'french' => 'Français',
 ];

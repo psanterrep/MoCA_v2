@@ -152,7 +152,7 @@ class ConsultationController extends Controller
 			]);
 
 			$doctor = Auth::user()->info();
-			$consultation = $doctor->getConsultation($id);
+			$consultation = $doctor->getConsultation($idConsultation);
 			
 			if(!$consultation)
 				return response()->json(['error'=>'No consultation found.']);
@@ -178,7 +178,7 @@ class ConsultationController extends Controller
 		try{
 			
 			$doctor = Auth::user()->info();
-			$consultation = $doctor->getConsultation($id);
+			$consultation = $doctor->getConsultation($idConsultation);
 			
 			if(!$consultation)
 				return response()->json(['error'=>'No consultation found.']);
@@ -205,7 +205,7 @@ class ConsultationController extends Controller
 	public function takeTest($idConsultation, $idTest){
 		try{
 			$doctor = Auth::user()->info();
-			$consultation = $doctor->getConsultation($id);
+			$consultation = $doctor->getConsultation($idConsultation);
 			
 			if(!$consultation)
 				return response()->json(['error'=>'No consultation found.']);
@@ -228,7 +228,7 @@ class ConsultationController extends Controller
 	public function saveTestResult(Request $request, $idConsultation, $idTest){
 		try{
 			$doctor = Auth::user()->info();
-			$consultation = $doctor->getConsultation($id);
+			$consultation = $doctor->getConsultation($idConsultation);
 			
 			if(!$consultation)
 				return response()->json(['error'=>'You cannot edit this consultation.']);

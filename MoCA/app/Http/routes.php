@@ -48,6 +48,8 @@ Route::group(['middleware' => 'web'], function () {
 		Route::get('/edit/{id}', 'UserController@edit');
 		// Matches The "/user/delete/{id}" URL
 		Route::get('/delete/{id}', 'UserController@delete');
+		// Matches The "/user/switchLang/{lang}" URL
+		Route::get('/switchLang/{lang}', 'UserController@switchLang');
 	});
 
     // Follow

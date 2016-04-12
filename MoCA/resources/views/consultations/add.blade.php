@@ -20,13 +20,13 @@
 					</div>
 					<div class="form-group">
 						<?= Form::label('type', Lang::get('consultations.consultation_type')); ?>
-						<?= Form::select("type", $a_types, null, ['placeholder' => Lang::get('consultations.choose_one').'..', 'class'=>'form-control']); ?>
+						<?= Form::select("type", $a_types, null, ['placeholder' => Lang::get('commons.choose_one').'..', 'class'=>'form-control']); ?>
 					</div>
 					<div class="form-group">
 						<?= Form::label('test', Lang::choice('commons.test',2)); ?>
 						<select multiple="multiple" name="tests[]" id="tests" class="form-control">
 						@foreach($tests as $test)
-							<option value="{{$test->id}}" ><?= $test->name." - ". Lang::get('consultations.version') ." ".$test->version ?></option>
+							<option value="{{$test->id}}" ><?= $test->name." - ". Lang::get('tests.version') ." ".$test->version ?></option>
 						@endforeach
 						</select>
 					</div>

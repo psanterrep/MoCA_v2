@@ -10,6 +10,8 @@ use App\User\Doctor;
 use App\User\Patient;
 use App\User\User_Type;
 use View;
+use App;
+use Session;
 
 class UserController extends Controller
 {
@@ -188,5 +190,16 @@ class UserController extends Controller
         }
         $user->id = $id;
         return $user;
+    }
+
+    /**
+     * Change lang
+     *
+     * @param  String  $lang
+     * @return view
+     */
+    public function switchLang($lang){
+        $language = Session::set('language',$lang);
+        return redirect()->back();
     }
 }

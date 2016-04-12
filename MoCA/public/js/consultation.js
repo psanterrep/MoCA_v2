@@ -106,3 +106,14 @@ function saveResult(result){
 		},
 	});
 }
+
+/*
+*	Make a csv file for importing data
+*/
+function exportResults(id){
+	var url = '/consultation/exportResults/' + id;
+		$.ajax({
+			type: "GET",
+			url: url
+		});
+}

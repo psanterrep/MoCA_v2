@@ -53,4 +53,29 @@ class Test extends Model
             return false;
         return true;
     }
+
+    /**
+    *  Return content of a test for csv file
+    * @return String
+    */
+    public function formatResultToCsv(){
+        $json = $this->pivot->result;
+        $results = json_decode($json, true);
+        
+        //  Add test's informations
+        $columnsName = ['Test name', 'version'];
+        $columnValue = [$this->name, $this->version];
+        
+        $file = "";
+        //  Add test's result
+        foreach ($results as $key => $value) {
+            array_push($columnsName, $key);
+            array_push($columnValue, $value);
+        }
+       
+        $file .= implode($columnsName, ',')."\n";
+        $file .= implode($columnValue, ',')."\n";
+
+        return $file;
+    }
 }

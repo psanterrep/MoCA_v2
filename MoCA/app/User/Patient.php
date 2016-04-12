@@ -93,4 +93,12 @@ class Patient extends Model
         }
         return $ids;
      }
+
+    /**
+    * Return specific consultation
+    * @return Consultation
+    */
+    public function getConsultation($id){
+        return $this->consultations()->where('idConsultation','=',$id)->first();
+    }
 }

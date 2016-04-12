@@ -100,4 +100,12 @@ class Doctor extends Model
         }
         return false;
     }
+
+    /**
+    * Return specific consultation
+    * @return Consultation
+    */
+    public function getConsultation($id){
+        return $this->consultations()->where('idConsultation','=',$id)->first();
+    }
 }

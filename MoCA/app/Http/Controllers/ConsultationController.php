@@ -151,7 +151,11 @@ class ConsultationController extends Controller
 				'type' => 'required|integer|min:1|exists:ConsultationTypes,id',
 			]);
 
-			$consultation = Consultation::findOrFail($idConsultation);
+			$doctor = Auth::user()->info();
+			$consultation = $doctor->getConsultation($id);
+			
+			if(!$consultation)
+				return response()->json(['error'=>'No consultation found.']);
 			if(!$consultation->updateFromRequest($request))
 				throw new Exception("Cannot update this consultation");
 
@@ -172,7 +176,12 @@ class ConsultationController extends Controller
 	*/
 	public function cancel($idConsultation){
 		try{
-			$consultation = Consultation::findOrFail($idConsultation);
+			
+			$doctor = Auth::user()->info();
+			$consultation = $doctor->getConsultation($id);
+			
+			if(!$consultation)
+				return response()->json(['error'=>'No consultation found.']);
 			
 			if(!$consultation->cancel())
 				throw new Exception("Cannot stop this consultation");
@@ -195,8 +204,12 @@ class ConsultationController extends Controller
 	*/
 	public function takeTest($idConsultation, $idTest){
 		try{
-			//	TODO Add validation check here
-			$consultation = Consultation::findOrFail($idConsultation);
+			$doctor = Auth::user()->info();
+			$consultation = $doctor->getConsultation($id);
+			
+			if(!$consultation)
+				return response()->json(['error'=>'No consultation found.']);
+
 			$test = Test::findOrFail($idTest);
 			return view('consultations.test', ['consultation' => $consultation,'test'=>$test]);
 		}catch(Exception $e){
@@ -214,7 +227,12 @@ class ConsultationController extends Controller
 	*/
 	public function saveTestResult(Request $request, $idConsultation, $idTest){
 		try{
-			$consultation = Consultation::findOrFail($idConsultation);
+			$doctor = Auth::user()->info();
+			$consultation = $doctor->getConsultation($id);
+			
+			if(!$consultation)
+				return response()->json(['error'=>'You cannot edit this consultation.']);
+
 			if(!$consultation->saveResult($idTest, $request->input('result')))
 				return response()->json(['error'=>'Cannot save the result for this test']);
 
@@ -231,7 +249,12 @@ class ConsultationController extends Controller
 	*/
 	public function showresults($id){
 		try{
-			$consultation = Consultation::findOrFail($id);
+			$doctor = Auth::user()->info();
+			$consultation = $doctor->getConsultation($id);
+			
+			if(!$consultation)
+				return response()->json(['error'=>'No consultation found.']);
+
 			if(!$consultation->hasResult())
 				return response()->json(['error'=>'No result found for this consultation']);
 
@@ -241,4 +264,37 @@ class ConsultationController extends Controller
 			return redirect()->back();
 		}
 	}
+
+	/**     
+    * Export result for all test for a patient
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function exportResults($id){
+        try{
+
+            //  Get current user
+            $doctor = Auth::user()->info();
+            $consultation = $doctor->getConsultation($id);
+
+			if(!$consultation)
+				return response()->json(['error'=>'No consultation found.']);
+
+			if(!$consultation->hasResult())
+				return response()->json(['error'=>'No result found for this consultation']);
+
+			//	Get file content
+            $file = $consultation->exportResult();
+
+            header('Content-Type: application/csv');
+            header('Content-Disposition: attachment; filename="consultation_export_'.date('Y-m-d').'.csv";');
+            print_r($file);
+            exit();
+
+        }catch(Exception $e){
+            \Session::flash('alert-danger',$e->getMessage());
+            return redirect()->back();
+        }
+    }
 }

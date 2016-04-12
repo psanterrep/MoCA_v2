@@ -39,4 +39,5 @@ return [
 	'choose_one' => 'Choose one',
 	'yes' => 'Yes',
 	'no' => 'No',
+	'export' => 'Export',
 ];

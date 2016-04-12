@@ -33,9 +33,13 @@
 						<?php endif ?>
 					<?php endforeach; ?>
 					</table>
+					<button type="button" class="btn btn-primary pull-right" onclick="exportResults(<?= $consultation->id ?>)">
+						<?= Lang::get('commons.export') ?>
+					</button>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="{{ URL::asset('js/consultation.js') }}"></script>
 @endsection 

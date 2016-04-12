@@ -21,7 +21,7 @@
 							<table class="table table-striped">
 								<tr>
 									<th><?= Lang::get('commons.name') ?></th>
-									<th><?= Lang::get('commons.version') ?></th>
+									<th><?= Lang::get('tests.version') ?></th>
 									<th><?= Lang::get('commons.result') ?></th>
 								</tr>  
 							<?php foreach ($consultation->tests()->get() as $test): ?>
@@ -44,6 +44,9 @@
 							</table>
 						<?php endif ?>
 					<?php endforeach; ?>
+					<button type="button" class="btn btn-primary pull-right" onclick="exportResults(<?= $patient->id ?>)">
+						<?= Lang::get('commons.export') ?>
+					</button>
 					<?php if ($isEmpty): ?>
 						<p>
 							<?= Lang::get('tests.no_result') ?>
@@ -59,4 +62,5 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="{{ URL::asset('js/follow.js') }}"></script>
 @endsection 

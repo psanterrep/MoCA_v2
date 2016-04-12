@@ -159,4 +159,18 @@ class Consultation extends Model
         }
         return false;
     }
+
+    /**
+    *  Return content for csv file
+    * @return String
+    */
+    public function exportResult(){
+        $file = "Consultation - ". $this->date."\n";
+        
+        foreach ($this->tests()->get() as $test){
+            $file .= $test->formatResultToCsv();
+            $file .= "\n";
+        }
+        return $file;
+    }
 }

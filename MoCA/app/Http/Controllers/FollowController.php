@@ -99,9 +99,52 @@ class FollowController extends Controller
     */
     public function showresults($id){
         try{
+
+            //  Get current user
+            $doctor = Auth::user()->info();
+
+            if(!$doctor->isFollowingPatient($id))
+                throw new Exception("This is not your patient!");
+
+            $patient = Patient::findOrFail($id);
+            return view('follows.testresults', ['patient' => $patient]);
+        }catch(Exception $e){
+            \Session::flash('alert-danger',$e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+     /**     
+    * Export result for all test for a patient
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function exportResults($id){
+        try{
+
+            //  Get current user
+            $doctor = Auth::user()->info();
+
+            if(!$doctor->isFollowingPatient($id))
+                throw new Exception("This is not your patient!");
+
             $patient = Patient::findOrFail($id);
 
-            return view('follows.testresults', ['patient' => $patient]);
+
+            $file= "";
+
+            //  Get all consultation
+            foreach ($patient->consultations()->get() as $consultation){
+                //  Get file content
+                $file .= $consultation->exportResult();
+                $file .= "\n";
+            }
+            header('Content-Type: application/csv');
+            header('Content-Disposition: attachment; filename="'.$patient->profile->username.'_export_'.date('Y-m-d').'.csv";');
+            print_r($file);
+            exit();
+
         }catch(Exception $e){
             \Session::flash('alert-danger',$e->getMessage());
             return redirect()->back();

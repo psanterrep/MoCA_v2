@@ -1,12 +1,12 @@
 <table class="table table-striped">
 <tr>
-    <th>Patient Name</th>
-    <th>Type</th>
-    <th>Date</th>
-    <th>Comment</th>
-    <th class="text-center">Result</th>
-    <th class="text-center">Edit</th>
-    <th class="text-center">Cancel</th>
+    <th><?= Lang::get('consultations.patient_name') ?></th>
+    <th><?= Lang::get('commons.type') ?></th>
+    <th><?= Lang::get('commons.date') ?></th>
+    <th><?= Lang::get('consultations.comment') ?></th>
+    <th class="text-center"><?= Lang::get('commons.result') ?></th>
+    <th class="text-center"><?= Lang::get('commons.edit') ?></th>
+    <th class="text-center"><?= Lang::get('commons.cancel') ?></th>
 </tr>  
 <?php foreach($consultations as $consultation): ?>
   <tr>
@@ -16,7 +16,7 @@
       <td><?= isset($consultation->comment) ? $consultation->comment : ""; ?></td>
       <td class="text-center">
         <?php if($consultation->hasResult()):?>
-            <a href="/consultation/showresults/<?= $consultation->id ?>" >View</a>
+            <a href="/consultation/showresults/<?= $consultation->id ?>" ><?= Lang::get('commons.view') ?></a>
         <?php endif; ?>
       </td>
       <td class="text-center">

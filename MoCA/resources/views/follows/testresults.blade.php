@@ -15,13 +15,14 @@
 							?>
 							
 							<p>
-								Test result for the consultation done on : <?= $consultation->date ?>
+								
+								<?= Lang::get('tests.test_result_for_the_consultation_done_on') ." ". $consultation->date ?>
 							</p>
 							<table class="table table-striped">
 								<tr>
-									<th>Name</th>
-									<th>Version</th>
-									<th>Result</th>
+									<th><?= Lang::get('commons.name') ?></th>
+									<th><?= Lang::get('commons.version') ?></th>
+									<th><?= Lang::get('commons.result') ?></th>
 								</tr>  
 							<?php foreach ($consultation->tests()->get() as $test): ?>
 								<?php if (!is_null($test->pivot->result)): ?>
@@ -45,11 +46,11 @@
 					<?php endforeach; ?>
 					<?php if ($isEmpty): ?>
 						<p>
-							There's no result for this patient.
+							<?= Lang::get('tests.no_result') ?>
 						</p>
 						<a href="/follow">
 							<button type="button" class="btn btn-primary" aria-label="Left Align">
-                            	<span class="glyphicon glyphicon-arrow-left" aria-hidden="true">&nbsp;</span>Back
+                            	<span class="glyphicon glyphicon-arrow-left" aria-hidden="true">&nbsp;</span><?= Lang::get('commons.back') ?>
                         	</button>
                         </a>
 					<?php endif ?>

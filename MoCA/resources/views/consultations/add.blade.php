@@ -15,26 +15,26 @@
 					@include('errors.messages')
 					<?= Form::open(array("url" => "/consultation/save/".$id,"method" => "POST")) ?>
 					<div class="form-group">
-						<?= Form::label('date', 'Date'); ?>
+						<?= Form::label('date', Lang::get('commons.date')); ?>
 						<?= Form::date("date", '', $attributes = array("class"=>"form-control")); ?>
 					</div>
 					<div class="form-group">
-						<?= Form::label('type', 'Consultation Type'); ?>
-						<?= Form::select("type", $a_types, null, ['placeholder' => 'Choose one..', 'class'=>'form-control']); ?>
+						<?= Form::label('type', Lang::get('consultations.consultation_type')); ?>
+						<?= Form::select("type", $a_types, null, ['placeholder' => Lang::get('consultations.choose_one').'..', 'class'=>'form-control']); ?>
 					</div>
 					<div class="form-group">
-						<?= Form::label('test', 'Tests'); ?>
+						<?= Form::label('test', Lang::choice('commons.test',2)); ?>
 						<select multiple="multiple" name="tests[]" id="tests" class="form-control">
 						@foreach($tests as $test)
-							<option value="{{$test->id}}" ><?= $test->name." - Version_".$test->version ?></option>
+							<option value="{{$test->id}}" ><?= $test->name." - ". Lang::get('consultations.version') ." ".$test->version ?></option>
 						@endforeach
 						</select>
 					</div>
 					<div class="form-group">
-						<?= Form::label('comment', 'Comment'); ?>
+						<?= Form::label('comment', Lang::get('consultations.comment')); ?>
 						<?= Form::textarea("comment", '', $attributes = array("class"=>"form-control")); ?>
 					</div>
-					<button type="submit" class="btn btn-primary pull-right">Add</button>
+					<button type="submit" class="btn btn-primary pull-right"><?= Lang::get('commons.add') ?></button>
 					<?= Form::close() ?>
 				</div>
 			</div>

@@ -7,13 +7,13 @@
 				<div class="panel-body center-block">
 					@include('errors.messages')
 					<p>
-						Test result for the consultation done on : <?= $consultation->date ?>
+						<?= Lang::get('tests.test_result_for_the_consultation_done_on') ?> : <?= $consultation->date ?>
 					</p>
 					<table class="table table-striped">
 						<tr>
-							<th>Name</th>
-							<th>Version</th>
-							<th>Result</th>
+							<th><?= Lang::get('commons.name') ?></th>
+							<th><?= Lang::get('tests.version') ?></th>
+							<th><?= Lang::get('commons.result') ?></th>
 						</tr>  
 					<?php foreach ($consultation->tests()->get() as $test): ?>
 						<?php if (!is_null($test->pivot->result)): ?>

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Moca</title>
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
@@ -60,22 +60,22 @@
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/home') }}">Home</a></li>
+                    <li><a href="{{ url('/home') }}"><?= Lang::get('commons.home')?></a></li>
                     <?php /* ?>
                     @if (!Auth::guest() && Auth::user()->isAdmin())
                     <?php */ ?>
-                        <li><a href="{{ url('/user') }}">Users</a></li>
-                        <li><a href="{{ url('/test') }}">Tests</a></li>
+                        <li><a href="{{ url('/user') }}"><?= Lang::choice('commons.user',2)?></a></li>
+                        <li><a href="{{ url('/test') }}"><?= Lang::choice('commons.test',2)?></a></li>
                     <?php /* ?>
                     @if (!Auth::guest() && Auth::user()->isDoctor())
                     <?php */ ?>
-                        <li><a href="{{ url('/follow') }}">My Patients</a></li>
+                        <li><a href="{{ url('/follow') }}"><?= Lang::choice('commons.patient',2)?></a></li>
                     <?php /* ?>
                     @endif
                     @endif
                     @if (!Auth::guest() && (Auth::user()->isDoctor() || Auth::user()->isPatient()))
                     <?php */ ?>
-                        <li><a href="{{ url('/consultation') }}">My Consultations</a></li>
+                        <li><a href="{{ url('/consultation') }}"><?= Lang::choice('commons.consultation',2)?></a></li>
                     <?php /* ?>
                     @endif
                     <?php */ ?>
@@ -85,7 +85,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
+                        <li><a href="{{ url('/login') }}"><?= Lang::get('commons.login')?></a></li>
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -93,7 +93,7 @@
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i><?= Lang::get('commons.logout')?></a></li>
                             </ul>
                         </li>
                     @endif

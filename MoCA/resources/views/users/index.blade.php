@@ -5,22 +5,22 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Users</div>
+                <div class="panel-heading"><?= Lang::choice('commons.user',2) ?></div>
                 <div class="panel-body">
                     @include('errors.messages')
 
                     <a href="/user/create">
                         <button type="button" class="btn btn-primary" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-plus" aria-hidden="true">&nbsp;</span>New user
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true">&nbsp;</span><?= Lang::get('commons.create')." ".Lang::choice('commons.user',1)  ?>
                         </button>
                     </a>
                     <table class="table table-striped">
                       <tr>
-                          <th>Username</th>
-                          <th>Type</th>
-                          <th>Email</th>
-                          <th class="text-center">Edit</th>
-                          <th class="text-center">Delete</th>
+                          <th><?= Lang::get('users.username') ?></th>
+                          <th><?= Lang::get('commons.type') ?></th>
+                          <th><?= Lang::get('commons.email') ?></th>
+                          <th class="text-center"><?= Lang::get('commons.edit') ?></th>
+                          <th class="text-center"><?= Lang::get('commons.delete') ?></th>
                       </tr>  
                     <?php foreach($users as $user): ?>
                         <tr>

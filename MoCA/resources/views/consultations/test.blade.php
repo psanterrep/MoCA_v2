@@ -16,7 +16,7 @@
 					<div id="jspsych-target" class="psych_window"></div>
     				<?php include($test->getFullPath()); ?>
     				<div class="text-center"> 
-						<button class="btn btn-primary" onclick="fullscreen();">Start Test</button>
+						<button class="btn btn-primary" onclick="fullscreen();"><?= Lang::get('tests.start_test') ?></button>
 					</div>
 				</div>
 			</div>

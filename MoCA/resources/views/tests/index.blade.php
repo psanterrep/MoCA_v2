@@ -19,6 +19,7 @@
                           <th class="text-center"><?= Lang::get('tests.version') ?></th>
                           <th><?= Lang::get('tests.path') ?></th>
                           <th class="text-center"><?= Lang::get('tests.active') ?></th>
+                          <th class="text-center"><?= Lang::get('commons.view') ?></th>
                           <th class="text-center"><?= Lang::get('commons.edit') ?></th>
                           <th class="text-center"><?= Lang::get('commons.delete') ?></th>
                       </tr>  
@@ -28,6 +29,7 @@
                             <td class="text-center"><?= $test->version; ?></td>
                             <td><?= $test->path; ?></td>
                             <td class="text-center"><?= ($test->active)? Lang::get('commons.yes') : Lang::get('commons.no'); ?></td>
+                            <td class="text-center"><a href="/test/view/<?= $test->id ?>"><?= Lang::get('commons.view') ?></a></td>
                             <td class="text-center">
                                 <a class="text-orange" href="/test/edit/<?= $test->id ?>">
                                     <span class="glyphicon glyphicon-pencil" aria-hidden="true">

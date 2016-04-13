@@ -40,4 +40,7 @@ return [
 	'yes' => 'Oui',
 	'no' => 'Non',
 	'export' => 'Exporter',
+	'english' => 'English',
+	'french' => 'Français',
+	'noscript' =>'Vous avez besoin de Javascript pour utiliser correctement ce site.'
 ];

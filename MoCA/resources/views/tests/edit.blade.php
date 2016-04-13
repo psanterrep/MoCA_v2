@@ -12,6 +12,16 @@
                         $id = isset($test) ? $test->id : 0; 
                         $edit = isset($test) ? $test->isLatestVersion() : true; 
                       ?>
+                      Instruction for the test file
+                      <ul>
+                          <?php if (App::getLocale()== 'fr'): ?>
+                              <li>Vérifiez que vous avez ajouter toutes les plugins de JsPsych dans le haut de votre page HTML</li>
+                              <li>Vérifiez que vous avez bien l'appel a la fonction "saveResult(Result)" dans le bloc debrief et ou le Result est un tableau de vos résultats</li>
+                          <?php else: ?>
+                              <li>Be sure every plugins is loaded at the top of you HTML file</li>
+                              <li>Be sure you have the call "saveResult(Result)" in your debrief block and where result is an array of your result"</li>
+                          <?php endif ?>
+                      </ul>
                      <?= Form::open(array("url" => "/test/save/{$id}","method" => "POST", 'files' => true)); ?>
                           <div class="form-group">
                               @if($edit)
@@ -31,7 +41,7 @@
                               <?= Form::label('active', Lang::get('tests.active')) ?>
                           </div>
                           <div class="form-group">
-                              <?= Form::label('file', Lang::get('tests.file_path')) ?>
+                              <?= Form::label('file', Lang::get('tests.file_path')."(html)") ?>
                               <?php if(isset($test)): ?>
                                   <br  />
                                   <p>
@@ -42,6 +52,12 @@
                                   <?= Form::file('file') ?>
                               @endif
                           </div>
+                          @if($edit)
+                              <div class="form-group">
+                                  <?= Form::label('file', Lang::get('tests.test_images')." (jpeg,bmp,png)") ?>
+                                  <?= Form::file('images[]', array('multiple'=>true)) ?>
+                              </div>
+                          @endif
                       <button type="submit" class="btn btn-primary"><?= Lang::get('commons.save') ?></button>
                       <?= Form::close(); ?>
                 </div>

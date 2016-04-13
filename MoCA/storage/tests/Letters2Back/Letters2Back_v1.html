@@ -1,0 +1,359 @@
+<!-- Add all JsPsych plugins here, path should looks like "/lib/jsPsych-5.0.3/plugins/jspsych-single-stim.js" -->
+<script type="text/javascript" src="/lib/jsPsych-5.0.3/plugins/jspsych-single-stim.js"></script>
+<script type="text/javascript" src="/js/jspsych-single-stim-modified.js"></script>
+<script type="text/javascript">
+    /* Message block */
+    var welcome_text_en = {
+        type: "text",
+        cont_key: "mouse",
+        text: "Next, you will do another kind of memory test. Pay close attention to the instructions. " +
+        "You will be shown a series of letters, one at a time in the middle of the screen. " +
+        "When each letter appears, you must decide if it is the same letter you saw exactly 2 letters before." +
+        "<p>Press any KEY or CLICK to begin.</p>"
+    };
+    var welcome_text_fr = {
+        type: "text",
+        cont_key: "mouse",
+        text: "Maintenant, nous allons faire une autre sorte de test de mémoire. " +
+        "Lisez bien/ soyez bien attentif aux/faites bien attention aux instructions. " +
+        "Vous allez voir une série de lettres, une à la fois, au centre de l’écran. " +
+        "Lorsque chaque lettre apparaîtra, vous devrez décider si c’est la même que celle que vous avez vue exactement 2 lettres plus tôt " +
+        "<p>Pesez sur n'importe quel touche ou cliquer pour commencer</p>"
+    };
+    var instruction_text_en = {
+        type: "text",
+        cont_key: "mouse",
+        text: "If the letter you are looking at is the SAME as the letter you saw" +
+        " 2 letters before,  press the SPACEBAR or CLICK. If it is not the same, do nothing." +
+        " Here is an example of a sequence of letters you might see. To help you understand" +
+        " we have shown them all in a row, but in the test, they will appear one at a time.<br>" +
+        ' <img src="example.bmp" alt="example" style="width:80%;height:30%;">'+
+        " <br>In this example, you would press the spacebar when the letter <span class='mediumText'>a</span> comes up," +
+        "because it is the SAME letter that appeared 2 letters back. " +
+        " You would not press the spacebar for the other letters; each one of them was different than" +
+        " the letter that appeared 2 letters before it. Are you ready for some practice?"+
+        "<p>Press any KEY or CLICK to begin.</p>"
+    };
+    var instruction_text_fr = {
+        type: "text",
+        cont_key: "mouse",
+        text: "Si la  lettre que vous voyez est exactement la MÊME que la lettre que vous avez vue " +
+        "deux lettres plus tôt, appuyez sur la BARRE D’ESPACEMENT. Si ce n’est pas la même lettre, ne faites rien. " +
+        "Voici un exemple de séquence de lettres que vous pourriez voir. " +
+        "Pour vous aider à comprendre, nous vous montrons toutes les lettres sur une ligne, " + 
+        "mais dans le test, les lettres n’apparaitront qu’une à la fois.<br>" +
+        '<img src="example.bmp" alt="example" style="width:80%;height:30%;">'+
+        "<br>Dans cet exemple, vous devriez appuyer sur la barre d’espacement quand la lettre <span class='mediumText'>a</span> " +
+        "apparaît car c’est la MÊME lettre qui est apparue 2 lettres plus tôt.  " +
+        "Vous ne devriez pas appuyer sur la barre d’espacement pour les autres lettres; " +
+        "chacune est différente de la lettre qui est apparue 2 lettres avant elle. " + 
+        "Êtes-vous prêt(e)s pour une pratique? "+
+        "<p>Pesez sur n'importe quel touche ou cliquer pour commencer</p>"
+    };  
+	var practice_end_text_en = {
+        type: "text",
+        cont_key: "mouse",
+        text: "Good job! You have completed the practice. " +
+        "Would you like more practice, or are you " +
+        "Ready to start?" +
+        "<p>Press any KEY or CLICK to begin.</p>"
+    };
+
+    var practice_end_text_fr = {
+        type: "text",
+        cont_key: "mouse",
+        text: "Bravo! Vous avez complété l’exercice de réchauffement." +
+        " Avez-vous besoin de plus de pratique, ou êtes-vous" +
+        " prêt à commencer? " +
+        "<p>Pesez sur n'importe quel touche ou cliquer pour commencer</p>"
+    };
+
+    var post_trial_gap = function() {
+      return Math.floor( Math.random() * 1500 ) + 750;
+    }
+
+    /*	Pratice displayData   */
+    practiceLetters =[]
+	practiceAnswers =[]
+	practiceLetters.push({stimulus: '<span class="largeText">b</span>'});practiceAnswers.push(false);
+	practiceLetters.push({stimulus: '<span class="largeText">r</span>'});practiceAnswers.push(false);
+	practiceLetters.push({stimulus: '<span class="largeText">i</span>'});practiceAnswers.push(false);
+	practiceLetters.push({stimulus: '<span class="largeText">h</span>'});practiceAnswers.push(false);
+	practiceLetters.push({stimulus: '<span class="largeText">g</span>'});practiceAnswers.push(false);
+	practiceLetters.push({stimulus: '<span class="largeText">h</span>'});practiceAnswers.push(true);
+	practiceLetters.push({stimulus: '<span class="largeText">a</span>'});practiceAnswers.push(false);
+	practiceLetters.push({stimulus: '<span class="largeText">n</span>'});practiceAnswers.push(false);
+	practiceLetters.push({stimulus: '<span class="largeText">a</span>'});practiceAnswers.push(true);
+
+	var practice_block = {
+        type: 'single-stim',
+        timeline: practiceLetters,
+        choices: practiceAnswers,
+        is_html: true,
+        timing_response: 2000,
+        choices: [' '], // space bar
+        mouse: true,
+        response_ends_trial: false
+    };
+
+
+	/*	Test displayData   */
+    trialLetters = [];
+    trialAnswers = [];
+    trialLetters.push({stimulus: '<span class="largeText">m</span>' });trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">b</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">q</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">h</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">c</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">o</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">x</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">u</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">x</span>'});trialAnswers.push(true);
+	/*trialLetters.push({stimulus: '<span class="largeText">l</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">w</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">e</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">w</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">j</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">s</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">t</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">v</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">d</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">v</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">k</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">g</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">p</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">z</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">p</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">i</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">a</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">s</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">r</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">u</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">f</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">u</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">p</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">h</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">o</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">h</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">w</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">j</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">r</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">e</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">d</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">g</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">d</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">c</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">q</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">b</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">t</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">b</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">i</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">k</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">a</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">s</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">x</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">s</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">v</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">m</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">z</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">l</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">a</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">g</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">a</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">z</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">w</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">z</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">h</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">p</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">l</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">r</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">m</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">t</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">j</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">q</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">k</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">o</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">k</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">x</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">f</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">d</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">f</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">a</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">s</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">e</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">u</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">p</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">u</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">x</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">i</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">v</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">z</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">c</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">k</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">o</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">l</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">d</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">l</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">u</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">b</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">j</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">m</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">r</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">e</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">t</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">a</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">t</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">g</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">w</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">h</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">p</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">h</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">q</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">f</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">s</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">f</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">h</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">w</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">j</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">q</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">v</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">q</span>'});trialAnswers.push(true);
+	trialLetters.push({stimulus: '<span class="largeText">a</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">d</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">k</span>'});trialAnswers.push(false);
+	trialLetters.push({stimulus: '<span class="largeText">d</span>'});trialAnswers.push(true);*/
+
+    var test_block = {
+        type: 'single-stim',
+        timeline: trialLetters,
+        choices: trialAnswers,
+        is_html: true,
+        timing_response: 2000,
+        choices: [' '], // space bar
+        mouse: true,
+        response_ends_trial: false
+    };
+
+    /* define debrief block */
+    var debrief_block = {
+      type: "text",
+      text: function() {
+
+        var resp = validateAnswers();
+        var avg_time = getAverageResponseTime()
+        //  Var result only need to be an array, it doesnt need to follow this format
+        var result = {
+            average_time:avg_time,
+            correct:resp.correct,
+            incorrect:resp.incorrect,
+            missed:resp.missed
+        };
+
+        // Save data for this test if it is the real test
+        if(!isPractice){
+        	//	function in test.js or consultation.js depending on which one you are take the test
+        	saveResult(result);
+        }
+
+        var message = "<p>Average response time = <strong>" + getAverageResponseTime() + "ms</strong>.<br>" + validateAnswersString();
+        if(!isPractice){
+        	message += "<br>Press any key to complete the experiment. Thank you!</p>";
+        }
+        return message;
+      }
+    };
+
+    /* create experiment definition array */
+    var experiment = [];
+    if(lang == "fr"){
+		experiment.push(welcome_text_fr);
+		experiment.push(instruction_text_fr);
+		experiment.push(practice_block);	
+    }
+    else{
+    	experiment.push(welcome_text_en);
+		experiment.push(instruction_text_en);
+		experiment.push(practice_block);
+    }
+    experiment.push(debrief_block);
+
+    //	Start practice
+    jsPsych.init({
+        display_element: $('#jspsych-target'),
+        timeline: experiment,
+        on_finish: function() {
+        	//	This will start the real test
+            startRealTest();
+        }
+    })
+
+    //	start the real test after the practice
+    function startRealTest(){
+    	var experiment = [];
+    	isPractice = false; // Global variable to see if the current test is a pratice or the real test
+    	if(lang == "fr"){
+			experiment.push(practice_end_text_fr);
+		}
+		else{
+			experiment.push(practice_end_text_en);
+		}
+		experiment.push(test_block);
+		experiment.push(debrief_block);
+    	jsPsych.init({
+	        display_element: $('#jspsych-target'),
+	        timeline: experiment,
+	        on_finish: function() {
+	            //jsPsych.data.displayData();
+	        }
+	    })
+    }
+
+    function getAverageResponseTime() {
+        var trials = jsPsych.data.getTrialsOfType('single-stim');
+        var sum_rt = 0;
+        var valid_trial_count = 0;
+        trials.forEach(function (stim) {
+            if ((stim.key_press == 32|stim.key_press == 'mouse') && stim.rt > -1 ) {
+                sum_rt += stim.rt;
+                valid_trial_count++;
+            }
+        });
+        return Math.floor(sum_rt / valid_trial_count);
+    }
+    function validateAnswers() {
+        var trials = jsPsych.data.getTrialsOfType('single-stim');
+        var resp = {
+            correct:0,
+            incorrect:0,
+            missed:0
+        };
+        var i =0;
+        trials.forEach(function (stim) {
+        	var response;
+
+        	//	Check to if its practice or real test to get the good response
+        	if(isPractice){
+        		response = practiceAnswers;
+        	}
+        	else{
+        		response = trialAnswers;
+        	}
+            if (stim.key_press == 32 || stim.key_press == 'mouse' ) { // space bar
+                if(response[i]) {
+                    resp.correct++;
+                } else {
+                    resp.incorrect++;
+                }
+            } else if(response[i]) { // they missed a letter 2 back match
+                resp.missed++;
+            }
+            i++;
+        });
+        return resp;
+    }
+
+    function validateAnswersString() {
+        var resp = validateAnswers();
+        return "Correct = "+  resp.correct + " incorrectly identified = "+resp.incorrect + " missed = "+resp.missed;
+    }
+</script>

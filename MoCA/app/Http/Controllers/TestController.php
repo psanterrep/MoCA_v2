@@ -50,8 +50,10 @@ class TestController extends Controller
     public function save(Request $request,$id){
 		try{
 			// Validate input before doing anything
-			$validator =$this->validate($request, [
+			$validator = $this->validate($request, [
 				'name' => 'required|max:255',
+				'images' => 'mimes:jpeg,bmp,png',
+				'file' => 'mimes:html'
 			]);
 
 			$test;
@@ -80,6 +82,19 @@ class TestController extends Controller
 				$test->uploadFile($file);
 			}
 
+			if($request->hasFile('images')){
+				//	Get temp file
+				$images = $request->file('images');
+				$uploaded = 0;
+				foreach($images as $image) {
+					$filename = $image->getClientOriginalName();
+        			$success = $image->move($test->getBasePath(), $filename);
+        			if($success)
+        				$uploaded ++;
+    			}
+				if($uploaded != count($images))
+					throw new Exception("Error whiloe uploading images");
+			}
 			if(!$test->save())
 				throw new Exception("Cannot save this test");
 
@@ -105,6 +120,24 @@ class TestController extends Controller
             
             \Session::flash('alert-success','This test have been deleted!');
             return redirect('test');
+
+        }catch(Exception $e){
+            \Session::flash('alert-danger',$e->getMessage());
+            return redirect()->back();
+        
+        }
+    }
+
+    /**
+     * Show view for Test
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function view($id){
+		try{
+    		$test = Test::findOrFail($id);
+            
+            return view('tests.view',['test'=>$test]);
 
         }catch(Exception $e){
             \Session::flash('alert-danger',$e->getMessage());

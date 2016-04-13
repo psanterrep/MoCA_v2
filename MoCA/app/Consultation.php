@@ -33,7 +33,7 @@ class Consultation extends Model
      */
     public function tests()
     {
-        return $this->belongsToMany('App\Test','ConsultationsTests','idConsultation','idTest')->withPivot('result')->withTimestamps();
+        return $this->belongsToMany('App\Test','Results','idConsultation','idTest')->withPivot('result')->withTimestamps();
     }
 
     /**

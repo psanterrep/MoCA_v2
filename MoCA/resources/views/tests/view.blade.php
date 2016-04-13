@@ -3,6 +3,11 @@
 <script type="text/javascript" src="{{ URL::asset('lib/jsPsych-5.0.3/jspsych.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('lib/jsPsych-5.0.3/plugins/jspsych-text.js') }}"></script>
 <link href="{{ asset('lib/spsych-5.0.3/jspsych.css') }}" rel="stylesheet">
+<script type="text/javascript">
+	var lang = '<?= App::getLocale() ?>';
+	var path = '<?= $test->getBasePath() ?>';
+	var isPractice = true;
+</script>
 @section('content')
 <div class="container">
 	<div class="row">
@@ -11,7 +16,6 @@
 				<div class="panel-body center-block">
 					@include('errors.messages')
 					<?= Form::token();?>
-					<?= Form::hidden("consultation",$consultation->id);?>
 					<?= Form::hidden("test",$test->id);?>
 					<?php if (App::getLocale() == "en"): ?>
 						Be sure to have Windows update disabled before taking this test
@@ -73,7 +77,6 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="{{ URL::asset('js/consultation.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('js/test.js') }}"></script>
 <script type="text/javascript" src="{{ URL::asset('lib/screenfull.js') }}"></script>
 @endsection 

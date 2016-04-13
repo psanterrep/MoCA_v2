@@ -13,21 +13,21 @@ class Test extends Model
      */
     public function consultations()
     {
-        return $this->belongsToMany('App\Consultation','ConsultationsTests','idTest','idConsultation')->withPivot('result')->withTimestamps();
+        return $this->belongsToMany('App\Consultation','Results','idTest','idConsultation')->withPivot('result')->withTimestamps();
     }
 
     /*
     *	Base path to test
     */
     public function getBasePath(){
-    	return storage_path()."/tests/";
+    	return storage_path()."/tests/".$this->name."/";
     }
 
     /*
     *   Full path to test
     */
     public function getFullPath(){
-        return storage_path()."/tests/".$this->path;
+        return $this->getBasePath().$this->path;
     }
 
     /*

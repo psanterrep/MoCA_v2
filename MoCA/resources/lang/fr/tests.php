@@ -15,7 +15,7 @@ return [
 
     'a_test' => 'un test',
     'version' => 'Version',
-    'file_path' => 'Chemin du fichier',
+    'file_path' => 'Chemin du fichier test',
     'current_path' => 'Chemin du fichier courrant est',   
     'path' => 'Chemin',
     'start' => 'Commencer',
@@ -25,5 +25,5 @@ return [
     'test_result_for_the_consultation_done_on' => 'Résultat du test pour la consultation du',
 	'no_result' => "Il n'y aucun résultat pour ce patient",
 	'active' => "Actif",
-	
+	'test_images' => 'Image du test. Ceux-ci vont être ajouté dans le même dossier que celui du fichier test',
 ];

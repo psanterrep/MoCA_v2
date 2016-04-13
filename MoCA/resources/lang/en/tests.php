@@ -15,7 +15,7 @@ return [
 
     'a_test' => 'a test',
     'version' => 'Version',
-    'file_path' => 'File Path',
+    'file_path' => 'File tests path',
     'current_path' => 'Current test path is',   
     'path' => 'Path',
     'start' => 'Start',
@@ -25,4 +25,5 @@ return [
 	'test_result_for_the_consultation_done_on' => 'Test result for the consultation done on',
 	'no_result' => "There's no result for this patient",
 	'active' => "Active",
+    'test_images' => 'Image for the test. They will be added in the same folder of the test',
 ];

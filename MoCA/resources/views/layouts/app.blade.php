@@ -39,6 +39,10 @@
     @yield('head')
 </head>
 <body id="app-layout">
+<div id="noscript" class="alert-danger text-center" style="padding: 10px 0;"><?= Lang::get('commons.noscript')?></div>
+<script type="text/javascript">
+    document.getElementById('noscript').style.display = 'none';
+</script>
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">

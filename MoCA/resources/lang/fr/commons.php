@@ -42,5 +42,6 @@ return [
 	'export' => 'Exporter',
 	'english' => 'English',
 	'french' => 'Français',
-	'noscript' =>'Vous avez besoin de Javascript pour utiliser correctement ce site.'
+	'noscript' =>'Vous avez besoin de Javascript pour utiliser correctement ce site.',
+    'compte' =>'Mon Compte',
 ];

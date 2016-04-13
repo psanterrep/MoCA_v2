@@ -17,9 +17,13 @@
                           <?php if (App::getLocale()== 'fr'): ?>
                               <li>Vérifiez que vous avez ajouter toutes les plugins de JsPsych dans le haut de votre page HTML</li>
                               <li>Vérifiez que vous avez bien l'appel a la fonction "saveResult(Result)" dans le bloc debrief et ou le Result est un tableau de vos résultats</li>
+                              <li>Une variable global "lang" en JavaScript permet d'avoir la langue présentement utilisé dans l'application. Ex : "en"</li>
+                              <li>Une variable global "isPractice" en JavaScript permet de savoir si le test est dans l'état de pratique ou non. Ex : true</li>
                           <?php else: ?>
                               <li>Be sure every plugins is loaded at the top of you HTML file</li>
                               <li>Be sure you have the call "saveResult(Result)" in your debrief block and where result is an array of your result"</li>
+                              <li>A global variabale in JavaScript called "lang" and have the current language of the application. Ex : "en"</li>
+                              <li>A global variabale in JavaScript called "isPractice" and say if the test is in practice mode or not. Ex : true</li>
                           <?php endif ?>
                       </ul>
                      <?= Form::open(array("url" => "/test/save/{$id}","method" => "POST", 'files' => true)); ?>

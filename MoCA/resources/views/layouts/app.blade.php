@@ -102,6 +102,7 @@
                             <?php else: ?>
                                 <li><a href="{{ url('/user/switchLang/en') }}"><?= Lang::get('commons.english')?></a></li>
                             <?php endif ?>
+                                <li><a href="#"><?= Lang::get('commons.compte')?></a></li>
                                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i><?= Lang::get('commons.logout')?></a></li>
                             </ul>
                         </li>

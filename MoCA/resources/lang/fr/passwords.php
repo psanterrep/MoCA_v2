@@ -14,9 +14,9 @@ return [
     */
 
     'password' => 'Les mots de passe doit avoir au minimum six caractères et doit être correspondre à la confirmation.',
-    'reset' => 'Votre mot de passe a été rénitialisé!',
+    'reset' => 'Votre mot de passe a été réinitialisé!',
     'sent' => 'Un courriel vous a été envoyé pour réinitialiser votre mot de passe!',
-    'token' => 'Ce jetons est invalide.',
-    'user' => "Il n'y a aucun utilisateur avec ce email.",
+    'token' => 'Ce jeton est invalide.',
+    'user' => "Il n'y a aucun utilisateur avec ce courriel.",
 
 ];

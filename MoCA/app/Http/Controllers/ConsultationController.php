@@ -71,11 +71,11 @@ class ConsultationController extends Controller
 			$canPassTest = $consultation->canPassTest($idTest);
 			if($canPassTest){
 				foreach ($consultation->doctors()->get() as $doctor) {
-					if($doctor->profile->username == $request->input('password'))
+					if(Hash::check($request->input('password'), $doctor->profile->password))
 						return response()->json(['passwordMatch'=>true]);
 				}
 			}
-			return response()->json(['passwordMatch'=>false,'error'=>'Password not matching']);
+			return response()->json(['passwordMatch'=>false,'error'=>'Password not matching! An email was sent to an Administrator']);
 			
 		}
 		catch(Exception $e){

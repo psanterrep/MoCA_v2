@@ -15,7 +15,7 @@ return [
 
     'follow_a_patient' => "Suivre un patient",
     'username_of_the_patient' => "Nom d'utilisation du patient",
-    'add_patient' => "Ajouter un patient",
+    'add_patient' => "Suivre un patient",
     'starting_follow' => "Début du suivie",
     'ended_follow' => "Fin du suivie",
 ];

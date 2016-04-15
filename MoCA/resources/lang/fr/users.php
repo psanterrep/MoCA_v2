@@ -19,4 +19,6 @@ return [
     'firstname' => 'Prénom',   
     'workplace' => 'Sélectionner votre lieu de travail',
     'role' => 'Role',
+    'password' => 'Mot de passe',
+    
 ];

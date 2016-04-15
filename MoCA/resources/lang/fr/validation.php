@@ -23,7 +23,7 @@ return [
     'before'               => ':attribute doit être avant :date.',
     'between'              => [
         'numeric' => ':attribute doit être entre :min et :max.',
-        'file'    => ':attribute doit être entre :min et :max kilo octet.',
+        'file'    => ':attribute doit être entre :min et :max kilo-octet.',
         'string'  => ':attribute doit être entre :min et :max caractères.',
         'array'   => ':attribute doit avoir entre :min and :max.',
     ],
@@ -35,7 +35,7 @@ return [
     'digits'               => ':attribute doit être :digits chiffres.',
     'digits_between'       => ':attribute doit être entre :min et :max chiffres.',
     'distinct'             => ':attribute champs a une valeur duplicative.',
-    'email'                => ':attribute doit être un adresse courriel valide.',
+    'email'                => ':attribute doit être une adresse courriel valide.',
     'exists'               => ':attribute est invalide.',
     'filled'               => ':attribute est requis.',
     'image'                => ':attribute doit être une image.',
@@ -46,14 +46,14 @@ return [
     'json'                 => ':attribute doit être une chaine JSON.',
     'max'                  => [
         'numeric' => ':attribute ne doit pas être supérieur à :max.',
-        'file'    => ':attribute ne doit pas être supérieur à :max kilo octets.',
+        'file'    => ':attribute ne doit pas être supérieur à :max kilo-octets.',
         'string'  => ':attribute ne doit pas être supérieur à :max caractères.',
         'array'   => ':attribute ne doit pas être supérieur à :max.',
     ],
     'mimes'                => ':attribute doit être de type: :values.',
     'min'                  => [
         'numeric' => ':attribute doit être au minimum :min.',
-        'file'    => ':attribute doit être au minimum :min kilo octets.',
+        'file'    => ':attribute doit être au minimum :min kilo-octets.',
         'string'  => ':attribute doit être au minimum :min caractères.',
         'array'   => ':attribute doit être au minimum :min.',
     ],
@@ -71,7 +71,7 @@ return [
     'same'                 => ':attribute et :other doivent correspondre.',
     'size'                 => [
         'numeric' => ':attribute doit être :size.',
-        'file'    => ':attribute doit être :size kilo octets.',
+        'file'    => ':attribute doit être :size kilo-octets.',
         'string'  => ':attribute doit être :size caractères.',
         'array'   => ':attribute doit contenir :size items.',
     ],

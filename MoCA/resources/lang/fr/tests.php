@@ -16,7 +16,7 @@ return [
     'a_test' => 'un test',
     'version' => 'Version',
     'file_path' => 'Chemin du fichier test',
-    'current_path' => 'Chemin du fichier courrant est',   
+    'current_path' => 'Chemin du fichier courant est',   
     'path' => 'Chemin',
     'start' => 'Commencer',
     'passed' => 'Passé',

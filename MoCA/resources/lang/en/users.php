@@ -19,4 +19,7 @@ return [
     'firstname' => 'Firstname',   
     'workplace' => 'Select your workplace',
     'role' => 'Role',
+    'password' => 'Password',
+    'remember' => 'Remember Me',
+    
 ];

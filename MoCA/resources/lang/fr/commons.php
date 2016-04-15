@@ -44,4 +44,9 @@ return [
 	'french' => 'Français',
 	'noscript' =>'Vous avez besoin de Javascript pour utiliser correctement ce site.',
     'compte' =>'Mon Compte',
+    'remember' => 'Se souvenir',
+    'forgot_password' => 'Mot de passe oublié',
+    'reset_password' => 'Réinitialisez votre mot de passe',
+    'send_password' => 'Envoyez le lien d\'activation',
+    'confirm_password' => 'Confirmez le mot de passe',
 ];

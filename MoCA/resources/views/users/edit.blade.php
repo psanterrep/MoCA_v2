@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading"><?= (isset($user)) ? Lang::get('commons.edit') : Lang::get('commons.create') ?> <?= Lang::choice('commons.test',1) ?></div>
+                <div class="panel-heading"><?= (isset($user)) ? Lang::get('commons.edit') : Lang::get('commons.create') ?> <?= Lang::choice('commons.user',1) ?></div>
                 <div class="panel-body">
                     @include('errors.messages')
                       <?php 

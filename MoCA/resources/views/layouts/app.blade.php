@@ -65,24 +65,17 @@
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}"><?= Lang::get('commons.home')?></a></li>
-                    <?php /* ?>
+                    
                     @if (!Auth::guest() && Auth::user()->isAdmin())
-                    <?php */ ?>
                         <li><a href="{{ url('/user') }}"><?= Lang::choice('commons.user',2)?></a></li>
                         <li><a href="{{ url('/test') }}"><?= Lang::choice('commons.test',2)?></a></li>
-                    <?php /* ?>
-                    @if (!Auth::guest() && Auth::user()->isDoctor())
-                    <?php */ ?>
-                        <li><a href="{{ url('/follow') }}"><?= Lang::choice('commons.patient',2)?></a></li>
-                    <?php /* ?>
                     @endif
+                    @if (!Auth::guest() && Auth::user()->isDoctor())
+                        <li><a href="{{ url('/follow') }}"><?= Lang::choice('commons.patient',2)?></a></li>
                     @endif
                     @if (!Auth::guest() && (Auth::user()->isDoctor() || Auth::user()->isPatient()))
-                    <?php */ ?>
                         <li><a href="{{ url('/consultation') }}"><?= Lang::choice('commons.consultation',2)?></a></li>
-                    <?php /* ?>
                     @endif
-                    <?php */ ?>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

@@ -14,6 +14,6 @@ return [
     */
 
     'failed' => 'Les informations ne corresponds pas avec ce que nous avons.',
-    'throttle' => 'Trop de tentative échoué. Veuillez recommencer dans :seconds secondes.',
+    'throttle' => 'Trop de tentative échouée. Veuillez recommencer dans :seconds secondes.',
 
 ];

@@ -2,8 +2,7 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\User\User_Type;
-use App\Consultation_Type;
+
 
 class CreateDatabase extends Migration
 {
@@ -172,26 +171,7 @@ class CreateDatabase extends Migration
             $table->timestamps();
         });
 
-        // Insert User Types
-        $type = new User_Type();
-        $type->name ="admin";
-        $type->save();
-
-        $type = new User_Type();
-        $type->name ="doctor";
-        $type->save();
-
-        $type = new User_Type();
-        $type->name ="patient";
-        $type->save();
-
-        $type = new Consultation_Type();
-        $type->name ="supervised";
-        $type->save();
-
-        $type = new Consultation_Type();
-        $type->name ="unsupervised";
-        $type->save();
+        
 
 
     }

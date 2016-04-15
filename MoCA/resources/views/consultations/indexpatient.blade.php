@@ -19,7 +19,7 @@
                             </tr>  
                             <?php foreach($consultations as $consultation): ?>
                             <tr>
-                                <td><?= isset($consultation->doctors()->get()->first()->name) ? $consultation->doctors()->get()->first()->name : ""; ?></td>
+                                <td><?= isset($consultation->doctors()->get()->first()->name) && isset($consultation->doctors()->get()->first()->firstname) ? $consultation->doctors()->get()->first()->firstname." ".$consultation->doctors()->get()->first()->name : ""; ?></td>
                                 <td><?= $consultation->type->name ?></td>
                                 <td><?= $consultation->date; ?></td>
                                 <td>

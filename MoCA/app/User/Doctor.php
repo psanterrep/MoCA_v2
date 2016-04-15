@@ -71,16 +71,20 @@ class Doctor extends Model
      * @return Boolean
      */
     public function saveFromRequest(Request $request){
-        if(User::find($this->id))
-        	$user = User::find($this->id);
+        
+        $user;
+
+        if(!isset($this->profile) && is_null(User::find($this->id)))
+            $user = new User();
         else
-        	$user = new User();
+            $user = User::find($this->id);
 
 
         $user->saveFromRequest($request);
-        $this->name = $request->input('type');
+        $this->id = $user->id;
+        $this->name = $request->input('name');
         $this->firstname = $request->input('firstname');
-       
+
         /*TODO
         $this->idPlace = $request->input('place');
         $this->idRole = $request->input('role');*/

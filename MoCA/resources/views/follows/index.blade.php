@@ -16,7 +16,7 @@
                     </a>
                     <table class="table table-striped">
                       <tr>
-                          <th><?= Lang::get('commons.username') ?></th>
+                          <th><?= Lang::get('users.username') ?></th>
                           <th><?= Lang::get('follow.starting_follow') ?></th>
                           <th><?= Lang::get('follow.ended_follow') ?></th>
                           <th><?= Lang::get('commons.email') ?></th>
